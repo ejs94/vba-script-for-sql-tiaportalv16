@@ -4,4 +4,4 @@
 ## Siemens_SQL_Sample
 * Exemplo fornecido pelo portal da Siemens
 
-*Estou Modificando e experimentando com ambos scripts para atender as necessidades do meu projeto*
+*Estou aqui modificando e experimentando com ambos scripts para atender as necessidades do meu projeto*
