@@ -22,15 +22,17 @@ On Error Resume Next
 Set conn = CreateObject("ADODB.Connection")
 Set rst = CreateObject("ADODB.Recordset")
 
+'For Local Connection
 connStrg = "DRIVER={SQL Server};" & _
-	"SERVER=192.168.0.11;" & _
+	"SERVER=.\SQLEXPRESS;" & _
 	"DATABASE=" & sqlDATABASE & ";" & _
-    "UID=eng;PWD=engenharia;"
+    "UID=;PWD=;"
 
+'For Remote Connection
 connStrg2 = "DRIVER={SQL Server};" & _
 	"SERVER=192.168.0.11;" & _
 	"DATABASE=" & sqlDATABASE & ";" & _
-    "UID=eng;PWD=engenharia;"
+    "UID=user;PWD=password;"
 
 'Open data source - Datenquelle öffnen
 conn.Open connStrg
