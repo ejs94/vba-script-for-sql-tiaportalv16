@@ -63,6 +63,8 @@ If Err.Number <> 0 Then
 	Set conn = Nothing
 	Set rst = Nothing 
 	Exit Sub
+Else
+	ShowSystemAlarm "Dados inserido com sucesso no banco de dados"
 End If
 
 'Close data source - Datenquelle schließen

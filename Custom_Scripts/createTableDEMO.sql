@@ -1,8 +1,0 @@
-USE hmiDB;
-CREATE TABLE Dados(
-	Dados_id INT IDENTITY(1,1) PRIMARY KEY, 
-	Nome VARCHAR(40) NOT NULL,
-	Idade INT NOT NULL,
-	Altura REAL NOT NULL,
-	Nascimento DATETIME
-);
