@@ -1,44 +1,48 @@
-Sub searchProduction(ByRef pOrdem, ByRef pInverteOrdem, ByRef pFiltroPN, ByRef pFiltroDataInicial, ByRef pFiltroDataFinal)
+Sub searchProduction(ByRef pColuna_Ordem, ByRef pInverteOrdem, ByRef pSearchPN, ByRef pFiltroDataInicial, ByRef pFiltroDataFinal)
 '////////////////////////////////////////////////////////////////
 ' Seleciona dados e Ordena de Acordo com o filtro setado na tela da IHM
-' Ordenacao padrao = ID DESC
+' Ordenacao padrao = ID Descrescente
 ' Created: 10-08-2020
 ' Version: v1
 ' Author:  EJS 
 '////////////////////////////////////////////////////////////////
 
 'DECLARACAO DE TAGs
-Dim conn, rst, SQL_Table, strAscDesc, i, j, strFuncName
+Dim conn, rst, SQL_Table, strAscDesc, i, j, strFuncName, Tipo_Ordem
+
+pColuna_Ordem = SmartTags("Coluna_Ordem") 'Coluna que será baseada a ordem
+Tipo_Ordem = SmartTags("Tipo_Ordem") 'Crescente ou Descrescente
+
 On Error Resume Next
 
 strFuncName = "searchProduction"
 
 'ABRIR CONEXAO
-If Not connect_MSSQL(conn) Then	
+If Not connect_MSSQL(conn,"hmiDB") Then	
 	Exit Sub
 End If
 
 'Verifica Ordem e Inversão
 
 'Inverte Ordem
-If ((pInverteOrdem = 1) And (pOrdem = SmartTags("nOrdem"))) Then
-	SmartTags("nAscDesc") = Not(SmartTags("nAscDesc"))
-	showLog "Inverteu Ordem. Asc=" & CStr(SmartTags("nAscDesc"))
-End If
+'If ((pInverteOrdem = 1) And (pOrdem = SmartTags("nOrdem"))) Then
+'	SmartTags("nAscDesc") = Not(SmartTags("nAscDesc"))
+'	showLog "Inverteu Ordem. Asc=" & CStr(SmartTags("nAscDesc"))
+'End If
 
 'Ordenar
-If pOrdem = "" Then
-	SmartTags("nOrdem") = "Producao_id"
-	SmartTags("nAscDesc") = False
-Else
-	SmartTags("nOrdem") = pOrdem
-End If
+'If pOrdem = "" Then
+'	SmartTags("nOrdem") = "Producao_id"
+'	SmartTags("nAscDesc") = False
+'Else
+'	SmartTags("nOrdem") = pOrdem
+'End If
 
 
 
 'PESQUISA BANCO DE DADOS
 showLog "Chamando Select"
-Set rst = searchSQL(SmartTags("nOrdem"), SmartTags("nAscDesc"), pFiltroPN, pFiltroDataInicial, pFiltroDataFinal, conn)
+Set rst = queryProduction(Coluna_Ordem, Tipo_Ordem, psearchPN, pFiltroDataInicial, pFiltroDataFinal, conn)
 	
 
 'BOF Indicates that the current record position is before the first record in a Recordset object. - Tabela está vazia
@@ -49,7 +53,9 @@ If Not (rst.EOF And rst.BOF) Then
 	showLog "Retornou Dados Válidos"
 	
 	rst.MoveFirst 'PRIMEIRO DADO RECEBIDO 
-	
+	showLog rst.Fields(0).Value & ", " & rst.Fields(1).Value & ", " & rst.Fields(2).Value & ", " & rst.Fields(3).Value &_
+	", " & rst.Fields(4).Value & ", " & rst.Fields(5).Value & ", " & rst.Fields(6).Value  & ", " & rst.Fields(7).Value &_
+	", " & rst.Fields(8).Value & ", " & rst.Fields(9).Value & ", " & rst.Fields(10).Value
 	'ZERA ITERADOR
 	j=0
 	
@@ -62,8 +68,8 @@ If Not (rst.EOF And rst.BOF) Then
 	rst.MoveFirst 'VOLTA AO PRIMEIRO DADO RECEBIDO 
 	
 	'VERIFICA SHIFT DE SETAS PRA CIMA / PRA BAIXO
-	If SmartTags("nTab")>=j-12 Then
-		SmartTags("nTab")=j-12
+	If SmartTags("nTab")>=j-13 Then
+		SmartTags("nTab")=j-13
 	End If
 	If SmartTags("nTab")<j-11 Then
 		For i=1 To SmartTags("nTab")
@@ -73,27 +79,37 @@ If Not (rst.EOF And rst.BOF) Then
 	If SmartTags("nTab")<0 Then
 		SmartTags("nTab")=0
 	End If
-	
+	showLog "Valores de i: " & i & " e j: " & j
 	'TODO : Alteras as Smartags para que fiquem conforme as tags configuradas para a tela.
-	For i=1 To 12	
+	For i=1 To 13	
 		'Completa tabela de tags
 		If rst.EOF Then
-			SmartTags("Value_ID_" & i) = ""
-			SmartTags("Value_Data_" & i) = ""
-			SmartTags("Value_Barcode_" & i) = ""
-			SmartTags("Value_Status_" & i) = ""
-			SmartTags("Value_DTInicio_" & i) = ""
-			SmartTags("Value_DTFim_" & i) = ""
-			SmartTags("Value_Modelo_" & i) = ""
+			SmartTags("ID_Value_" & i) = 0
+			SmartTags("PN_Value_" & i) = ""
+			SmartTags("Modelo_Value_" & i) = ""
+			SmartTags("NomeModelo_Value_" & i) = ""
+			SmartTags("BB155_Value_" & i) = ""
+			SmartTags("BB165_Value_" & i) = ""
+			SmartTags("BB175_Value_" & i) = ""
+			SmartTags("BB185_Value_" & i) = ""
+			SmartTags("Inspecao_Value_" & i) = ""
+			'SmartTags("DT_Inicio_Value_" & i) = ""
+			'SmartTags("DT_Fim_Value_" & i) = ""
+			showLog "Estou aqui 1"
 		Else
-			SmartTags("Value_ID_" & i) = rst.Fields(0).Value
-			SmartTags("Value_Data_" & i) = rst.Fields(1).Value
-			SmartTags("Value_Barcode_" & i) = rst.Fields(2).Value
-			SmartTags("Value_Status_" & i) = rst.Fields(7).Value
-			SmartTags("Value_DTInicio_" & i) = rst.Fields(3).Value
-			If IsNull(rst.Fields(4)) Then SmartTags("Value_DTFim_" & i)=""
-			SmartTags("Value_DTFim_" & i) = rst.Fields(4).Value
-			SmartTags("Value_Modelo_" & i) = rst.Fields(8).Value
+			SmartTags("ID_Value_" & i) = rst.Fields(0).Value
+			SmartTags("PN_Value_" & i) = rst.Fields(1).Value
+			SmartTags("Modelo_Value_" & i) = rst.Fields(2).Value
+			SmartTags("NomeModelo_Value_" & i) = rst.Fields(2).Value
+			SmartTags("BB155_Value_" & i) = rst.Fields(3).Value
+			SmartTags("BB165_Value_" & i) = rst.Fields(4).Value 
+			SmartTags("BB175_Value_" & i) = rst.Fields(5).Value
+			SmartTags("BB185_Value_" & i) = rst.Fields(6).Value
+			If rst.Fields(7).Value = 1 Then SmartTags("Inspecao_Value_" & i) = "True" Else SmartTags("Inspecao_Value_" & i) = "False"
+			SmartTags("DT_Inicio_Value_" & i) = Hour(rst.Fields(9).Value) & ":" & Minute(rst.Fields(9).Value) & ":" & Second(rst.Fields(9).Value)
+			SmartTags("DT_Fim_Value_" & i) = Hour(rst.Fields(10).Value) & ":" & Minute(rst.Fields(10).Value) & ":" & Second(rst.Fields(10).Value)
+			'If IsNull(rst.Fields(10).Value) Then SmartTags("DT_Fim_Value_" & i)=""
+			showLog "Estou aqui 2"
 			rst.MoveNext
 		End If
 	Next
@@ -103,15 +119,20 @@ If Not (rst.EOF And rst.BOF) Then
 Else
 	showLog "DADOS RETORNARAM VAZIOS!"
 	
-	For i=1 To 12	
+	For i=1 To 13	
 		'Apaga tabela de tags
-			SmartTags("Value_ID_" & i) = ""
-			SmartTags("Value_Data_" & i) = ""
-			SmartTags("Value_Barcode_" & i) = ""
-			SmartTags("Value_Status_" & i) = ""
-			SmartTags("Value_DTInicio_" & i) = ""
-			SmartTags("Value_DTFim_" & i) = ""
-			SmartTags("Value_Modelo_" & i) = ""
+			SmartTags("ID_Value_" & i) = ""
+			SmartTags("PN_Value_" & i) = ""
+			SmartTags("Modelo_Value_" & i) = ""
+			SmartTags("NomeModelo_Value_" & i) = ""
+			SmartTags("BB155_Value_" & i) = ""
+			SmartTags("BB165_Value_" & i) = ""
+			SmartTags("BB175_Value_" & i) = ""
+			SmartTags("BB185_Value_" & i) = ""
+			SmartTags("Inspecao_Value_" & i) = ""
+			'SmartTags("DT_Inicio_Value_" & i) = ""
+			'SmartTags("DT_Fim_Value_" & i) = ""
+			showLog "Estou aqui 3"
 	Next
 End If
 
@@ -120,5 +141,6 @@ conn.close
 
 Set rst = Nothing
 Set conn = Nothing
+
 
 End Sub

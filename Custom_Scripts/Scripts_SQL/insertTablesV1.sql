@@ -7,11 +7,10 @@ Values('333124', '2134421', '16/03/20', GETDATE());
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
 Values
-    (1, 'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+    (9, 'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
 
-
---- Query to see the result:
---- Select para cruzar as duas tabelas
-SELECT S.Producao_id, B.PNSerialString, B.ModeloString, S.opBB155, S.opBB165, S.opBB175, S.opBB185, S.inspecao, B.dt_Entrada, S.dt_Saida
-FROM RegEntradaBlocos AS B
-    RIGHT JOIN RegSaidaBlocos AS S ON B.Bloco_id = S.Bloco_id;
+--- Outro exemplo, já que melhoro ele.
+INSERT INTO RegSaidaBlocos
+    (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
+Values
+    (10, 'Nao Okey', 'Okey', 'Okey', 'Okey', 'Sim', GETDATE());

@@ -11,6 +11,15 @@ CREATE TABLE RegEntradaBlocos
 	dt_Entrada DATETIME,
 );
 
+---TODO Fazer um registro de modelo atraves do banco de dados, que se foda o recept do tia portal
+--- Tabela de registro de modelos de blocos
+CREATE TABLE ModelosBlocos
+(
+	Modelo_id INT IDENTITY PRIMARY KEY,
+	ModeloString VARCHAR(7) NOT NULL,
+	NomeNodelo VARCHAR(40) NOT NULL
+);
+
 --- Tabela preenchida com a saida dos blocos
 CREATE TABLE RegSaidaBlocos
 (
