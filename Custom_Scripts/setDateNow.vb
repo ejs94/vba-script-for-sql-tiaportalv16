@@ -1,6 +1,7 @@
 Sub setDateNow()
 
 SmartTags("pFiltroDataFinal") = Now
+SmartTags("pFiltroDataInicial") = Now - 3
 
 On Error Resume Next
 
