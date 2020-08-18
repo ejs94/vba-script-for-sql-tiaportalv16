@@ -10,7 +10,6 @@ beginDate = Year(beginDate) & "-" & Month(beginDate) & "-" & Day(beginDate) & " 
 endDate = Year(endDate) & "-" & Month(endDate) & "-" & Day(endDate) & " 23:59"
 search = SmartTags("pSearchPN")
 
-
 On Error Resume Next
 
 strFuncName = "queryProduction"
@@ -26,7 +25,6 @@ SQL_Table = "USE hmiDB; " &_
 'Filtro de datas
 SQL_Table = SQL_Table & "WHERE S.dt_Saida BETWEEN '" & beginDate & "' AND '" & endDate & "'  "
 
-			
 'Verifica se foi pedido filtro de PN
 If search <> "" Then
 	SQL_Table = SQL_Table & "AND B.PNSerialString LIKE '%" & search & "%' "
@@ -56,7 +54,5 @@ showLog "Retornando ResultSet"
 
 'Retorna Resultset da pesquisa
 Set queryProduction = rst
-
-
 
 End Function
