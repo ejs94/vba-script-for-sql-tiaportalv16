@@ -42,7 +42,7 @@ End If
 
 'PESQUISA BANCO DE DADOS
 showLog "Chamando Select"
-Set rst = queryProduction(Coluna_Ordem, Tipo_Ordem, psearchPN, pFiltroDataInicial, pFiltroDataFinal, conn)
+Set rst = queryProduction(Coluna_Ordem, Tipo_Ordem, pSearchPN, pFiltroDataInicial, pFiltroDataFinal, conn)
 	
 
 'BOF Indicates that the current record position is before the first record in a Recordset object. - Tabela está vazia
@@ -53,9 +53,7 @@ If Not (rst.EOF And rst.BOF) Then
 	showLog "Retornou Dados Válidos"
 	
 	rst.MoveFirst 'PRIMEIRO DADO RECEBIDO 
-	showLog rst.Fields(0).Value & ", " & rst.Fields(1).Value & ", " & rst.Fields(2).Value & ", " & rst.Fields(3).Value &_
-	", " & rst.Fields(4).Value & ", " & rst.Fields(5).Value & ", " & rst.Fields(6).Value  & ", " & rst.Fields(7).Value &_
-	", " & rst.Fields(8).Value & ", " & rst.Fields(9).Value & ", " & rst.Fields(10).Value
+
 	'ZERA ITERADOR
 	j=0
 	
@@ -93,23 +91,20 @@ If Not (rst.EOF And rst.BOF) Then
 			SmartTags("BB175_Value_" & i) = ""
 			SmartTags("BB185_Value_" & i) = ""
 			SmartTags("Inspecao_Value_" & i) = ""
-			'SmartTags("DT_Inicio_Value_" & i) = ""
-			'SmartTags("DT_Fim_Value_" & i) = ""
-			showLog "Estou aqui 1"
-		Else
+			SmartTags("DT_Inicio_Value_" & i) = ""
+			SmartTags("DT_Fim_Value_" & i) = ""
+		Elses
 			SmartTags("ID_Value_" & i) = rst.Fields(0).Value
 			SmartTags("PN_Value_" & i) = rst.Fields(1).Value
 			SmartTags("Modelo_Value_" & i) = rst.Fields(2).Value
-			SmartTags("NomeModelo_Value_" & i) = rst.Fields(2).Value
-			SmartTags("BB155_Value_" & i) = rst.Fields(3).Value
-			SmartTags("BB165_Value_" & i) = rst.Fields(4).Value 
-			SmartTags("BB175_Value_" & i) = rst.Fields(5).Value
-			SmartTags("BB185_Value_" & i) = rst.Fields(6).Value
-			If rst.Fields(7).Value = 1 Then SmartTags("Inspecao_Value_" & i) = "True" Else SmartTags("Inspecao_Value_" & i) = "False"
+			SmartTags("NomeModelo_Value_" & i) = rst.Fields(3).Value
+			SmartTags("BB155_Value_" & i) = rst.Fields(4).Value
+			SmartTags("BB165_Value_" & i) = rst.Fields(5).Value 
+			SmartTags("BB175_Value_" & i) = rst.Fields(6).Value
+			SmartTags("BB185_Value_" & i) = rst.Fields(7).Value
+			SmartTags("Inspecao_Value_" & i) = rst.Fields(8).Value
 			SmartTags("DT_Inicio_Value_" & i) = Hour(rst.Fields(9).Value) & ":" & Minute(rst.Fields(9).Value) & ":" & Second(rst.Fields(9).Value)
 			SmartTags("DT_Fim_Value_" & i) = Hour(rst.Fields(10).Value) & ":" & Minute(rst.Fields(10).Value) & ":" & Second(rst.Fields(10).Value)
-			'If IsNull(rst.Fields(10).Value) Then SmartTags("DT_Fim_Value_" & i)=""
-			showLog "Estou aqui 2"
 			rst.MoveNext
 		End If
 	Next
@@ -130,17 +125,15 @@ Else
 			SmartTags("BB175_Value_" & i) = ""
 			SmartTags("BB185_Value_" & i) = ""
 			SmartTags("Inspecao_Value_" & i) = ""
-			'SmartTags("DT_Inicio_Value_" & i) = ""
-			'SmartTags("DT_Fim_Value_" & i) = ""
-			showLog "Estou aqui 3"
+			SmartTags("DT_Inicio_Value_" & i) = ""
+			SmartTags("DT_Fim_Value_" & i) = ""
 	Next
 End If
 
-'Close data source - Datenquelle schließen
+'Close data source - Fecha a conexão com o SQL Server
 conn.close
 
 Set rst = Nothing
 Set conn = Nothing
-
 
 End Sub
