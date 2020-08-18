@@ -14,6 +14,17 @@ INSERT INTO RegEntradaBlocos
     (PNSerialString,Modelo_id,DataString,dt_Entrada)
 Values('FFE364', 30, '17/04/20', GETDATE());
 
+--- Registro de Entrada de Blocos com SubQuery
+INSERT INTO RegEntradaBlocos
+    (PNSerialString,Modelo_id,DataString,dt_Entrada)
+Values
+    ( 'FFFEEE',
+        (SELECT IFNULL(Modelo_id, 'Nao Reg')
+        FROM ModeloBlocos
+        WHERE ModeloString='364'), --- Se o modelo não estiver na tabela o valor será NULL
+        '18/05/20',
+        GETDATE());
+
 --- Registro de Blocos na Saída
 --- Registro quando o bloco sai da celula
 INSERT INTO RegSaidaBlocos
