@@ -122,7 +122,7 @@ Else
 	
 	For i=1 To 13	
 		'Apaga tabela de tags
-			SmartTags("ID_Value_" & i) = ""
+			SmartTags("ID_Value_" & i) = 0
 			SmartTags("PN_Value_" & i) = ""
 			SmartTags("Modelo_Value_" & i) = ""
 			SmartTags("NomeModelo_Value_" & i) = ""

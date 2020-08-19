@@ -6,7 +6,7 @@ Dim rst, SQL_Table, strAscDesc, strFuncName, beginDate, endDate, search
 'Essas Tags precisam ser criadas na IHM e associadas aos diplays de input
 beginDate = SmartTags("pFiltroDataInicial")
 endDate = SmartTags("pFiltroDataFinal")
-beginDate = Year(beginDate) & "-" & Month(beginDate) & "-" & Day(beginDate) & " 23:59"
+beginDate = Year(beginDate) & "-" & Month(beginDate) & "-" & Day(beginDate) & " 00:00"
 endDate = Year(endDate) & "-" & Month(endDate) & "-" & Day(endDate) & " 23:59"
 search = SmartTags("pSearchPN")
 
