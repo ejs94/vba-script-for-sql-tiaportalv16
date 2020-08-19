@@ -1,15 +1,14 @@
-Sub selectEditPart()
-Dim strFuncName,ProductionID, SQL_Table, conn, rst, Field
+Sub selectEditProduction()
+Dim strFuncName,ProductionID, SQL_Table, conn, rst
 Dim pDATABASE
 
 pDATABASE = "hmiDB"
-strFuncName = "selectEditPart"
+strFuncName = "selectEditProduction"
 
 On Error Resume Next
 
 ProductionID = SmartTags("Edit_ID_Value")
-Field = SmartTags("Edit_BB155_Field")
-showLog "Valor teste: " & Field
+
 'ABRIR CONEXAO
 Set conn = CreateObject("ADODB.Connection")
 Set rst = CreateObject("ADODB.Recordset")
@@ -129,16 +128,3 @@ Set rst = Nothing
 Set conn = Nothing
 
 End Sub
-
-SmartTags("") = 0
-SmartTags("") = 1
-SmartTags("") = 2
-SmartTags("") = 3
-
-Edit_BB155_Field
-Edit_BB165_Field
-Edit_BB175_Field
-Edit_BB185_Field
-Edit_Inspecao_Field
-
-B.PNSerialString, M.NomeModelo, S.opBB155, S.opBB165, S.opBB175, S.opBB185, S.inspecao 
