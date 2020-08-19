@@ -6,3 +6,16 @@ FROM RegEntradaBlocos AS B
     JOIN RegSaidaBlocos AS S ON B.Bloco_id = S.Bloco_id
     LEFT JOIN ModelosBlocos AS M ON B.Modelo_id = M.Modelo_id
 ORDER BY S.dt_Saida DESC, S.Producao_id DESC;
+
+--- Query for see the values on Edit Table in HMI
+SELECT Producao_id,
+    S.opBB155,
+    M.NomeModelo,
+    S.opBB165,
+    S.opBB175,
+    S.opBB185,
+    S.inspecao
+FROM RegEntradaBlocos AS B
+    JOIN RegSaidaBlocos AS S ON B.Bloco_id = S.Bloco_id
+    LEFT JOIN ModelosBlocos AS M ON B.Modelo_id = M.Modelo_id
+WHERE Producao_id=10;
