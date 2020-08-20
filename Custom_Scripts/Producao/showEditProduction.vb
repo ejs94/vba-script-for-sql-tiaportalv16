@@ -1,9 +1,9 @@
-Sub selectEditProduction()
+Sub showEditProduction()
 Dim strFuncName,ProductionID, SQL_Table, conn, rst
 Dim pDATABASE
 
 pDATABASE = "hmiDB"
-strFuncName = "selectEditProduction"
+strFuncName = "showEditProduction"
 
 On Error Resume Next
 
