@@ -1,4 +1,5 @@
 Sub showProduction()
+
 '////////////////////////////////////////////////////////////////
 ' Essa função atualiza todos os On-Display do tela para mostrar 
 ' os valores do SQL Server
@@ -25,7 +26,7 @@ End If
 
 'PESQUISA BANCO DE DADOS
 showLog "Chamando Select"
-Set rst = queryProduction(conn)
+Set rst = queryProduction(conn,"DESC")
 	
 
 'BOF Indicates that the current record position is before the first record in a Recordset object. - Tabela está vazia
@@ -77,18 +78,18 @@ If Not (rst.EOF And rst.BOF) Then
 			SmartTags("DT_Inicio_Value_" & i) = ""
 			SmartTags("DT_Fim_Value_" & i) = ""
 		Else
-			'Caso algum valor seja NULL isso irá evitar a replicação do valor do FOR_i Anterior
-			If IsNull(rst.Fields(0)) Then SmartTags("ID_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(1)) Then SmartTags("PN_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(2)) Then SmartTags("Modelo_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(3)) Then SmartTags("NomeModelo_Value_" & I) = "NULL"
-			If IsNull(rst.Fields(4)) Then SmartTags("BB155_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(5)) Then SmartTags("BB165_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(6)) Then SmartTags("BB175_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(7)) Then SmartTags("BB185_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(8)) Then SmartTags("Inspecao_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(9)) Then SmartTags("DT_Inicio_Value_" & i) = "NULL"
-			If IsNull(rst.Fields(10))Then SmartTags("DT_Fim_Value_" & i) = "NULL"
+			'Caso algum valor seja NULL isso irá evitar a replicação do valor i Anterior
+			If IsNull(rst.Fields(0)) Then SmartTags("ID_Value_" & i) = ""
+			If IsNull(rst.Fields(1)) Then SmartTags("PN_Value_" & i) = ""
+			If IsNull(rst.Fields(2)) Then SmartTags("Modelo_Value_" & i) = ""
+			If IsNull(rst.Fields(3)) Then SmartTags("NomeModelo_Value_" & i) = ""
+			If IsNull(rst.Fields(4)) Then SmartTags("BB155_Value_" & i) = ""
+			If IsNull(rst.Fields(5)) Then SmartTags("BB165_Value_" & i) = ""
+			If IsNull(rst.Fields(6)) Then SmartTags("BB175_Value_" & i) = ""
+			If IsNull(rst.Fields(7)) Then SmartTags("BB185_Value_" & i) = ""
+			If IsNull(rst.Fields(8)) Then SmartTags("Inspecao_Value_" & i) = ""
+			If IsNull(rst.Fields(9)) Then SmartTags("DT_Inicio_Value_" & i) = ""
+			If IsNull(rst.Fields(10))Then SmartTags("DT_Fim_Value_" & i) = ""
 			'Condição para escrever em toda tela
 			SmartTags("ID_Value_" & i) = rst.Fields(0).Value
 			SmartTags("PN_Value_" & i) = rst.Fields(1).Value

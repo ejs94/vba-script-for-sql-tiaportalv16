@@ -1,6 +1,6 @@
-Function queryProduction(ByRef pConnection)
+Function queryProduction(ByRef pConnection, ByRef OrderBy)
 'Query ao DB manipulada pelo VBA do Tia Portal
-
+' OrderBy deve ser uma String 'ASC' or 'DESC'
 Dim rst, SQL_Table, strAscDesc, strFuncName, beginDate, endDate, search
 
 'Essas Tags precisam ser criadas na IHM e associadas aos diplays de input
@@ -31,7 +31,7 @@ If search <> "" Then
 End If	
 
 'Ordena para padrão decrescente
-SQL_Table = SQL_Table & " ORDER BY S.dt_Saida DESC, S.Producao_id DESC;"
+SQL_Table = SQL_Table & " ORDER BY S.dt_Saida " & OrderBy & ", S.Producao_id " & OrderBy & ";"
 
 'Se o Debug estiver ativado
 showLog "Select: " & SQL_Table
