@@ -40,3 +40,16 @@ CREATE TABLE RegSaidaBlocos
 	inspecao VARCHAR(5) DEFAULT 'Nao',
 	dt_Saida DATETIME
 );
+
+--- Tabela com as alterações realizada na tabela de produção
+CREATE TABLE alterProducTable
+(
+	Alter_id INT IDENTITY PRIMARY KEY,
+	Producao_id INT FOREIGN KEY REFERENCES RegSaidaBlocos(Producao_id)
+	ON DELETE SET NULL
+    ON UPDATE CASCADE,
+	comando VARCHAR(400),
+	wwid VARCHAR
+	(20) NOT NULL,
+	dt_Alteracao DATETIME
+);

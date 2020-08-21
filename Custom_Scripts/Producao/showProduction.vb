@@ -1,5 +1,4 @@
 Sub showProduction()
-
 '////////////////////////////////////////////////////////////////
 ' Essa função atualiza todos os On-Display do tela para mostrar 
 ' os valores do SQL Server
@@ -53,14 +52,17 @@ If Not (rst.EOF And rst.BOF) Then
 	If SmartTags("nTab")>=j-13 Then
 		SmartTags("nTab")=j-13
 	End If
+
 	If SmartTags("nTab")<j-12 Then
 		For i=1 To SmartTags("nTab")
 			rst.MoveNext
 		Next
 	End If
+
 	If SmartTags("nTab")<0 Then
 		SmartTags("nTab")=0
 	End If
+	
 	showLog "Valores de i: " & i & " e j: " & j
 	'TODO : Alteras as Smartags para que fiquem conforme as tags configuradas para a tela.
 	For i=1 To 13	

@@ -1,6 +1,6 @@
 Sub EditProduction()
 Dim strFuncName,ProductionID, SQL_Table, conn, rst
-Dim pDATABASE
+Dim pDATABASE, Reg_Edit_Table
 Dim OP10 , OP20, OP30, OP40, Inpec
 
 pDATABASE = "hmiDB"
@@ -93,12 +93,20 @@ If ProductionID <> 0 Then
                 " inspecao='" & Inpec & "'" &_
                 " WHERE Producao_id=" & ProductionID & "; "
     
+    Reg_Edit_Table =    "USE hmiDB; " &_
+                        "INSERT INTO alterProducTable " &_
+                        "(Producao_id,comando,wwid,dt_Alteracao) " &_
+                        "Values( " & ProductionID & ", '" & Replace(SQL_Table,"'","''") & "', '" & SmartTags("Ultimo_WWID") & "', " & "GETDATE()" & ");"
 
 'Se o Debug estiver ativado
 'showLog  strFuncName & " Select: " & SQL_Table
 'EXECUTA COMANDO SQL
-Set rst = conn.Execute(SQL_Table)
-showLog strFuncName & "Dados Atualizados"
+    Set rst = conn.Execute(SQL_Table)
+    Set rst = conn.Execute(Reg_Edit_Table)
+    showLog strFuncName & "Dados Atualizados"
+    showLog "SQL Table: " & SQL_Table
+    showLog "Reg Table: " & Reg_Edit_Table
+
 End If
 
 'TRATA ERRO
@@ -117,5 +125,5 @@ conn.close
 Set rst = Nothing
 Set conn = Nothing
 
-End Sub
 
+End Sub

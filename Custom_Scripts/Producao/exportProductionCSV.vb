@@ -1,3 +1,4 @@
+Sub exportProductionCSV()
 '////////////////////////////////////////////////////////////////
 ' Exporta pesquisa para arquivo
 ' Created: 2020-08-20
@@ -7,7 +8,7 @@
 
 'DECLARACAO DE TAGs
 Dim conn, rst, SQL_Table, strAscDesc, i, j
-Dim Cabecalho, fs, ObjFile, StrFileName, strFuncName, Linha, Dados, SqlDados, pDATABASE, datevar
+Dim Cabecalho, fs, ObjFile, ObjFileTmp, StrFileName, strFuncName, Linha, Dados, SqlDados, pDATABASE, datevar
 
 pDATABASE = "hmiDB"
 datevar = Year(Now) & "_" & Month(Now) & "_" & Day(Now) & "_" & Hour(Now) & "_" & Minute(Now) & "_" & Second(Now)
@@ -51,7 +52,7 @@ If Not (rst.EOF And rst.BOF) Then
 	'Nome do Arquivo
 	'SmartTags("MSG_FILENAME")="Arquivo_" & StrFileName
 	StrFileName = "D:\ArquivosCSV\Arquivo_" & datevar & ".csv"
-	StrFileName = "D:\ArquivosCSV\TMP.csv"
+	TmpFileName = "D:\ArquivosCSV\TMP.csv"
  
 	'Cabeçalho	
 	Cabecalho = ""
@@ -60,11 +61,13 @@ If Not (rst.EOF And rst.BOF) Then
 	Next		
 
 	Set fs = CreateObject("Scripting.FilesyStemObject")
-	Set ObjFile= fs.CreateTextFile(StrFileName,True)
+	Set ObjFile = fs.CreateTextFile(StrFileName,True)
+	Set ObjFileTmp = fs.CreateTextFile(TmpFileName,True)
 
 	'HmiRuntime.Trace("VB-Script: Write file: " & StrFileName & vbCrLf)
 
 	ObjFile.WriteLine(Cabecalho)
+	ObjFileTmp.WriteLine(Cabecalho)
 	showLog "Cabecalho"
 
 	rst.MoveFirst 'VOLTA AO PRIMEIRO DADO RECEBIDO 
@@ -85,6 +88,7 @@ If Not (rst.EOF And rst.BOF) Then
 	rst.close
 	
 	ObjFile.WriteLine(Dados)
+	ObjFileTmp.WriteLine(Dados)
 	'HmiRuntime.Trace(Dados & vbCrLf)
 
 Else
@@ -110,3 +114,6 @@ ObjFile.Close
 
 Set rst = Nothing
 Set conn = Nothing
+
+
+End Sub
