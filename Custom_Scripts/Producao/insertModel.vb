@@ -1,15 +1,15 @@
-Sub EditProduction()
+Sub insertModel()
 'Rotina irá escrever no Banco de Dados após confirmação das opções dispobnibilizadas.
-Dim strFuncName,ProductionID, SQL_Table, conn, rst
+Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim OP10 , OP20, OP30, OP40, Inpec
+Dim Modelo , NomeModelo
 
-pDATABASE = "hmiDB"
-strFuncName = "selectEditPart"
 
 On Error Resume Next
-
-ProductionID = SmartTags("Edit_ID_Value")
+SmartTags("Ultimo_WWID") = "TesteVB"
+Model_ID = SmartTags("edit_TipoCarga")
+Modelo = SmartTags("edit_ModelString")
+NomeModelo = SmartTags("edit_ModelNameString")
 
 'ABRIR CONEXAO
 Set conn = CreateObject("ADODB.Connection")
@@ -30,69 +30,15 @@ If Err.Number <> 0 Then
 	Exit Sub
 End If
 
-
-' Chaveamento para conversar com o text file do TIA PORTAL
-Select Case SmartTags("Edit_BB165_Field")
-    Case 1
-        OP10 = "Aprovada"
-    Case 2
-        OP10 = "Refugada"
-    Case 3
-        OP10 = "Lib. Op"
-    Case Else
-        OP10 = ""
-End Select
-Select Case SmartTags("Edit_BB165_Field")
-    Case 1
-        OP20 = "Aprovada"
-    Case 2
-        OP20 = "Refugada"
-    Case 3
-        OP20 = "Lib. Op"
-    Case Else
-        OP20 = ""
-End Select
-Select Case SmartTags("Edit_BB175_Field")
-    Case 1
-        OP30 = "Aprovada"
-    Case 2
-        OP30 = "Refugada"
-    Case 3
-        OP30 = "Lib. Op"
-    Case Else
-        OP30 = ""
-End Select
-Select Case SmartTags("Edit_BB185_Field")
-    Case 1
-        OP40 = "Aprovada"
-    Case 2
-        OP40 = "Refugada"
-    Case 3
-        OP40 = "Lib. Op"
-    Case Else
-        OP40 = ""
-End Select
-
-Select Case SmartTags("Edit_Inspecao_Field")
-    Case 1
-        Inpec = "Sim"
-    Case 2
-        Inpec = "Nao"
-    Case Else
-        Inpec = ""
-End Select
-
-
 'Caso a ID seja válida então poderá ocorrer a alteranção no Banco de Dados
-If ProductionID <> 0 Then
+If Model_ID <> 0 And Modelo <> "" And NomeModelo <> "" Then
     SQL_Table = "USE hmiDB; " &_
-                " UPDATE RegSaidaBlocos" &_
-                " SET opBB155='" & OP10 & "'," &_
-                " opBB165='" & OP20 & "'," &_
-                " opBB175='" & OP30 & "'," &_
-                " opBB185='" & OP40 & "'," &_
-                " inspecao='" & Inpec & "'" &_
-                " WHERE Producao_id=" & ProductionID & "; "
+                " INSERT INTO ModelosBlocos" &_
+                " (Modelo_id, ModeloString, NomeModelo)" &_
+                " Values (" & Model_ID & ", " &_
+                "'" & Modelo & "', " &_
+                "'" & NomeModelo & "' );"
+                
     
     Reg_Edit_Table =    "USE hmiDB; " &_
                         "INSERT INTO alterProducTable " &_

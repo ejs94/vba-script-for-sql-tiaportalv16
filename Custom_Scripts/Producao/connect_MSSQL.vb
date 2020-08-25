@@ -1,4 +1,5 @@
 Function connect_MSSQL(ByRef pConnection, ByRef pDATABASE)
+'Funcção para conectar o SQL Server, para isolar parte do código e permetir a reutilização
 
 Dim strFuncName
 

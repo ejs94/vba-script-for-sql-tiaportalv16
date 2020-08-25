@@ -45,11 +45,24 @@ CREATE TABLE RegSaidaBlocos
 CREATE TABLE alterProducTable
 (
 	Alter_id INT IDENTITY PRIMARY KEY,
-	Producao_id INT FOREIGN KEY REFERENCES RegSaidaBlocos(Producao_id)
-	ON DELETE SET NULL
-    ON UPDATE CASCADE,
 	comando VARCHAR(400),
 	wwid VARCHAR
 	(20) NOT NULL,
 	dt_Alteracao DATETIME
+);
+
+--- Tabela das manuntenções planejadas
+CREATE TABLE manPlanejada
+(
+	manPlan_id INT IDENTITY PRIMARY KEY,
+	equip VARCHAR(20),
+	tipoManunt VARCHAR
+	(20),
+	priorid VARCHAR(20),
+	resposavel VARCHAR(20),
+	descri VARCHAR(150),
+	hr_planej TIME,
+	ativo BIT,
+	dia_manunt DATE,
+	dt_Ultima_Alter DATETIME
 );

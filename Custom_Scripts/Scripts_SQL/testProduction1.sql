@@ -75,7 +75,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FFF224'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 
 INSERT INTO RegSaidaBlocos
@@ -84,7 +84,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FFE464'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -92,7 +92,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FCF294'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -100,7 +100,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='AFE434'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -108,7 +108,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='F17764'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 
 INSERT INTO RegSaidaBlocos
@@ -117,7 +117,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='3CE694'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -125,7 +125,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='7FE444'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -133,7 +133,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='F13464'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -141,7 +141,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='3CF294'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 
 INSERT INTO RegSaidaBlocos
@@ -150,7 +150,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='7FE224'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -158,7 +158,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='F23864'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -166,7 +166,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='33F264'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -174,7 +174,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='74E4D4'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 
 INSERT INTO RegSaidaBlocos
@@ -183,7 +183,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='7FE334'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -191,7 +191,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FFF999'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -199,7 +199,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FFF998'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 INSERT INTO RegSaidaBlocos
     (Bloco_id,opBB155,opBB165,opBB175,opBB185,inspecao,dt_Saida)
@@ -207,4 +207,4 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FFF987'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());

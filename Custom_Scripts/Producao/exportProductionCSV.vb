@@ -8,7 +8,7 @@ Sub exportProductionCSV()
 
 'DECLARACAO DE TAGs
 Dim conn, rst, SQL_Table, strAscDesc, i, j
-Dim Cabecalho, fs, ObjFile, ObjFileTmp, StrFileName, strFuncName, Linha, Dados, SqlDados, pDATABASE, datevar
+Dim Cabecalho, fs, ObjFile, ObjFileTmp, StrFileName,TmpFileName,strFuncName, Linha, Dados, SqlDados, pDATABASE, datevar
 
 pDATABASE = "hmiDB"
 datevar = Year(Now) & "_" & Month(Now) & "_" & Day(Now) & "_" & Hour(Now) & "_" & Minute(Now) & "_" & Second(Now)
@@ -90,6 +90,9 @@ If Not (rst.EOF And rst.BOF) Then
 	ObjFile.WriteLine(Dados)
 	ObjFileTmp.WriteLine(Dados)
 	'HmiRuntime.Trace(Dados & vbCrLf)
+	Call ShowPopupScreen("Custom_MSG",260,316,hmiOn,hmiBottom,hmiFast)
+	SmartTags("Custom_MSG_Titulo") = "Dados Salvos!"
+	SmartTags("Custom_MSG_Text") = "Em :" & StrFileName
 
 Else
 	showLog  "DADOS RETORNARAM VAZIOS!"
@@ -114,6 +117,7 @@ ObjFile.Close
 
 Set rst = Nothing
 Set conn = Nothing
+
 
 
 End Sub
