@@ -23,7 +23,6 @@ pConnection.Open "DRIVER={SQL Server};" & _
 '	"DATABASE=" & pDATABASE & ";" & _
 '   "UID=user;PWD=password;"
 
-
 'TRATA ERROS
 If Err.Number <> 0 Then
 	ShowSystemAlarm strFuncName & ": Erro ao Abrir Conexão."
