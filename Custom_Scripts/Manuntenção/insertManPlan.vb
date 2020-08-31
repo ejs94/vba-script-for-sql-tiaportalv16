@@ -2,7 +2,7 @@ Sub insertManPlan()
 'Rotina irá escrever no Banco de Dados após confirmação das opções dispobnibilizadas.
 Dim strFuncName, ManPlan_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim Responsavel, Descricao, horasPlanej, dataPlanej, Maquina, tipoManuntenc, Prioridade
+Dim Responsavel as string, Descricao as string, horasPlanej, dataPlanej, Maquina, tipoManuntenc, Prioridade
 
 pDATABASE = "hmiDB"
 strFuncName = "insertManPlan"
@@ -11,8 +11,12 @@ On Error Resume Next
 
 Responsavel = SmartTags("edit_respons")
 Descricao = SmartTags("edit_descr")
-horasPlanej = SmartTags("edit_h_plan")
-dataPlanej = SmartTags("edit_dt_mant")
+Prioridade = SmartTags("edit_prior")
+tipoManunt = SmartTags("edit_TipoManuten")
+Maquina = SmartTags("edit_maqEqu")
+horasPlanej = "CAST('" & SmartTags("edit_h_plan") & "' AS time)"
+dataPlanej = "CAST('" & SmartTags("edit_dt_mant") & "' AS date)"
+
 
 SmartTags("Ultimo_WWID") = "ManPlan"
 
@@ -80,24 +84,19 @@ End Select
 
 'Caso a ID seja válida então poderá ocorrer a alteranção no Banco de Dados
 If Responsavel <> "" AND Descricao <> "" Then
-    SQL_Table = "USE hmiDB; " &_
-                " UPDATE manPlanejada" &_
-                " SET equip='" & Maquina & "'," &_
-                " tipoManunt='" & tipoManuntenc & "'," &_
-                " priorid='" & Prioridade & "'," &_
-                " resposavel='" & Responsavel & "'," &_
-                " descri='" & Descricao & "'," &_
-                " hr_planej='" & horasPlanej & "'," &_
-                " dia_manunt='" & dataPlanej & "'," &_
-                " dt_Ultima_Alter=" & "GETDATE()" &_
-                " WHERE manPlan_id=" & ManPlan_ID & "; "
 
     SQL_Table = "USE hmiDB; " &_
             " INSERT INTO manPlanejada" &_
-            " (Modelo_id, ModeloString, NomeModelo)" &_
-            " Values (" & Model_ID & ", " &_
-            "'" & Modelo & "', " &_
-            "'" & NomeModelo & "' );"
+            " (equip,tipoManunt,priorid,resposavel,descri,hr_planej,ativo,dia_manunt,dt_Ultima_Alter)" &_
+            " Values ('" & Maquina & "', " &_
+            "'" & tipoManuntenc & "', " &_
+            "'" & Prioridade & "', " &_
+            "'" & Responsavel & "', " &_
+            "'" & Descricao & "', " &_
+            horasPlanej & " , " &_
+            "1, " &_
+            dataPlanej & " , " &_
+            "GETDATE() );"
     
     Reg_Edit_Table =    "USE hmiDB; " &_
                         "INSERT INTO alterProducTable " &_
@@ -133,8 +132,3 @@ Set conn = Nothing
 
 
 End Sub
-
-
-
-
-(manPlan_id,equip,tipoManunt,priorid,resposavel,descri,hr_planej,ativo,dia_manunt,dt_Ultima_Alter)

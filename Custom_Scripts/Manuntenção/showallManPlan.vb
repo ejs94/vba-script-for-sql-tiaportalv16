@@ -1,7 +1,7 @@
 Sub showAllManPlan()
 
 'DECLARACAO DE TAGs
-Dim conn, rst, SQL_Table, strAscDesc, i, j, strFuncName
+Dim conn, rst, SQL_Table, i, j, strFuncName
 
 On Error Resume Next
 
@@ -15,7 +15,7 @@ SQL_Table = " USE hmiDB;" &_
                 ",tipoManunt AS 'Tipo de Man.'" &_
                 ",descri AS 'Descrição'" &_
 	            ",priorid AS 'Priorid.'" &_
-                ",dia_manunt AS 'Dia Reserv.'" &_
+                ",FORMAT(dia_manunt, 'dd/MM/yyyy') AS 'Dia Reserv.'" &_
                 ",FORMAT(hr_planej, 'hh\:mm') AS 'Hrs. Planej.'" &_
 	            ",resposavel AS 'Responsavel'" &_
             "FROM manPlanejada"
