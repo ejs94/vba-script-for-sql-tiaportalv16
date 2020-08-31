@@ -2,7 +2,9 @@ Sub insertManPlan()
 'Rotina irá escrever no Banco de Dados após confirmação das opções dispobnibilizadas.
 Dim strFuncName, ManPlan_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim Responsavel as string, Descricao as string, horasPlanej, dataPlanej, Maquina, tipoManuntenc, Prioridade
+Dim Responsavel, Descricao
+Dim horasPlanej, dataPlanej 
+Dim Maquina, tipoManuntenc, Prioridade
 
 pDATABASE = "hmiDB"
 strFuncName = "insertManPlan"
@@ -12,10 +14,10 @@ On Error Resume Next
 Responsavel = SmartTags("edit_respons")
 Descricao = SmartTags("edit_descr")
 Prioridade = SmartTags("edit_prior")
-tipoManunt = SmartTags("edit_TipoManuten")
+tipoManuntenc = SmartTags("edit_TipoManuten")
 Maquina = SmartTags("edit_maqEqu")
-horasPlanej = "CAST('" & SmartTags("edit_h_plan") & "' AS time)"
-dataPlanej = "CAST('" & SmartTags("edit_dt_mant") & "' AS date)"
+horasPlanej = "CAST('" & Hour(SmartTags("edit_h_plan")) & ":" & Minute(SmartTags("edit_h_plan")) & "' AS time)"
+dataPlanej = "CAST('" & Year(SmartTags("edit_dt_mant")) & "-" & Month(SmartTags("edit_dt_mant")) & "-" & Day(SmartTags("edit_dt_mant")) & "' AS date)"
 
 
 SmartTags("Ultimo_WWID") = "ManPlan"
@@ -83,7 +85,7 @@ Select Case SmartTags("edit_prior")
 End Select
 
 'Caso a ID seja válida então poderá ocorrer a alteranção no Banco de Dados
-If Responsavel <> "" AND Descricao <> "" Then
+If Responsavel <> "" And Descricao <> "" Then
 
     SQL_Table = "USE hmiDB; " &_
             " INSERT INTO manPlanejada" &_

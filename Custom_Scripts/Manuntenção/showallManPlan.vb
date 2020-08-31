@@ -90,6 +90,8 @@ If Not (rst.EOF And rst.BOF) Then
 			If IsNull(rst.Fields(5)) Then SmartTags("Responsavel_" & i) = ""
 			If IsNull(rst.Fields(6)) Then SmartTags("Dia_Reservado_" & i) = ""
 			If IsNull(rst.Fields(7))Then SmartTags("Hrs_Planejada_" & i) = ""
+			' Chaveamento
+			
 			'Condição para escrever em toda tela
 			SmartTags("ID_Manuntecao_" & i) = rst.Fields(0).Value
 			SmartTags("Maquina_Field_" & i) = rst.Fields(1).Value

@@ -50,8 +50,4 @@ Select Case SmartTags("Prioridade_Field_" & pFieldNumber)
         SmartTags("edit_prior") = 0
 End Select
 
-SmartTags("edit_prior") = SmartTags("Prioridade_Field_" & pFieldNumber)
-SmartTags("edit_maqEqu") = SmartTags("Maquina_Field_" & pFieldNumber)
-SmartTags("edit_TipoManuten") = SmartTags("TipoMaquina_Field_" & pFieldNumber)
-
 End Sub
