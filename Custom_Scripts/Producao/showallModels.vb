@@ -24,7 +24,7 @@ End If
 
 
 'PESQUISA BANCO DE DADOS
-showLog "Chamando Select"
+showLog strFuncName & ": Chamando Select"
 Set rst = queryAllModels(conn)
 	
 
@@ -33,7 +33,7 @@ Set rst = queryAllModels(conn)
 
 If Not (rst.EOF And rst.BOF) Then 
 	'RETORNOU COM DADOS VÁLIDOS, PREENCHE TAGS:
-	showLog "Retornou Dados Válidos"
+	showLog strFuncName & ": Retornou Dados Válidos"
 	
 	rst.MoveFirst 'PRIMEIRO DADO RECEBIDO 
 
@@ -63,7 +63,6 @@ If Not (rst.EOF And rst.BOF) Then
 		SmartTags("model_nTab")=0
 	End If
 	
-	showLog "Valores de i: " & i & " e j: " & j
 	'TODO : Alteras as Smartags para que fiquem conforme as tags configuradas para a tela.
 	For i=1 To 13	
 		'Completa tabela de tags
@@ -88,7 +87,7 @@ If Not (rst.EOF And rst.BOF) Then
 	rst.close 
 	
 Else
-	showLog "DADOS RETORNARAM VAZIOS!"
+	showlog strFuncName & ": DADOS RETORNARAM VAZIOS!"
 	
 	For i=1 To 13	
 		'Apaga tabela de tags

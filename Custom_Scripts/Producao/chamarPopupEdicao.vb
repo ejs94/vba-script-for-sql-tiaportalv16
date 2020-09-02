@@ -1,6 +1,6 @@
 Sub chamarPopupEdicao()
-'Rotina para permitir editar a peça apenas após input do WWID
-'Essa rotinha chama a rotina Edit_Prod
+'Permite editar a peça após o input do WWID
+'Essa rotinha chama a PopUp Edit_Prod
 'Made by: Estevao J Santos
 On Error Resume Next
 

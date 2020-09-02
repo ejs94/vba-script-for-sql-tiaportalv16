@@ -1,5 +1,8 @@
 Sub editModel()
-'Rotina irá escrever no Banco de Dados após confirmação das opções dispobnibilizadas.
+'Permite editar os modelos dos blocos que estão sendo utilizados pelos blocos
+'Todas as alterações são salvar em uma table do SQL Server
+'Criado por: Estêvão José dos Santos
+
 Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
 Dim Modelo , NomeModelo

@@ -3,7 +3,7 @@ Sub exportProductionCSV()
 ' Exporta pesquisa para arquivo
 ' Created: 2020-08-20
 ' Version: v1
-' Author:  EJS 
+' Author:  EJS - El Stevão
 '////////////////////////////////////////////////////////////////
 
 'DECLARACAO DE TAGs
@@ -50,7 +50,6 @@ If Not (rst.EOF And rst.BOF) Then
 	j=0
 	
 	'Nome do Arquivo
-	'SmartTags("MSG_FILENAME")="Arquivo_" & StrFileName
 	StrFileName = "D:\ArquivosCSV\Arquivo_" & datevar & ".csv"
 	TmpFileName = "D:\ArquivosCSV\TMP.csv"
  
@@ -64,8 +63,6 @@ If Not (rst.EOF And rst.BOF) Then
 	Set ObjFile = fs.CreateTextFile(StrFileName,True)
 	Set ObjFileTmp = fs.CreateTextFile(TmpFileName,True)
 
-	'HmiRuntime.Trace("VB-Script: Write file: " & StrFileName & vbCrLf)
-
 	ObjFile.WriteLine(Cabecalho)
 	ObjFileTmp.WriteLine(Cabecalho)
 	showLog "Cabecalho"
@@ -77,7 +74,6 @@ If Not (rst.EOF And rst.BOF) Then
 		For j=0 To (rst.Fields.Count - 1)
 			SqlDados=rst.Fields(j).Value
             If j = 9 Or j = 10 Then SqlDados= "'" & rst.Fields(j).Value & "'" End If
-			'SqlDados=Replace(SqlDados,Chr(13),"") 'Retira o Caracter (ENTER) do código 
 			Linha = Linha & SqlDados & ","
 		Next
 		Dados = Dados & Linha & vbCrLf
@@ -89,7 +85,8 @@ If Not (rst.EOF And rst.BOF) Then
 	
 	ObjFile.WriteLine(Dados)
 	ObjFileTmp.WriteLine(Dados)
-	'HmiRuntime.Trace(Dados & vbCrLf)
+
+	'Popup para avisar o usuario que os dados foram salvos
 	Call ShowPopupScreen("Custom_MSG",260,316,hmiOn,hmiBottom,hmiFast)
 	SmartTags("Custom_MSG_Titulo") = "Dados Salvos!"
 	SmartTags("Custom_MSG_Text") = "Em :" & StrFileName
@@ -100,6 +97,7 @@ Else
 End If
 
 
+'Tratamento de erro, vai soltar mensagem no AlarmView
 If Err.Number <> 0 Then
 	ShowSystemAlarm strFuncName & ": Error #" & Err.Number & " " & Err.Description
 	Err.Clear
@@ -111,7 +109,7 @@ If Err.Number <> 0 Then
 End If    
 
 
-'Close data source - Datenquelle schließen
+'Fecha as conexoes
 conn.close
 ObjFile.Close
 

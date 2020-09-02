@@ -1,5 +1,5 @@
 Sub EditProduction()
-'Rotina irá escrever no Banco de Dados após confirmação das opções dispobnibilizadas.
+'Rotina irá escrever no Banco de Dados após alterações nas opções dispobnibilizadas.
 Dim strFuncName,ProductionID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
 Dim OP10 , OP20, OP30, OP40, Inpec
