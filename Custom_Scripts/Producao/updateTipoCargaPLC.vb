@@ -3,7 +3,8 @@ Sub updateTipoCargaPLC()
 'Alterações na IPC irão afetar os modelos armazenados pelo PLC
 ' Criado por: EJS
 'DECLARACAO DE TAGs
-Dim pDATABASE, conn, rst, SQL_TABLE_COUNT, SQL_TABLE, i, strFuncName, num_linhas
+Dim pDATABASE, conn, rst, SQL_TABLE_COUNT, SQL_TABLE, i, strFuncName, num_linhas, connStringTest
+Dim tempID, tempValue(49)
 
 On Error Resume Next
 
@@ -24,6 +25,11 @@ SQL_TABLE = " USE hmiDB;" &_
             " WHERE ModeloString != '' AND Modelo_id BETWEEN 1 AND 49" &_
             " ORDER BY Modelo_id;"
 
+connStringTest = "DRIVER={SQL Server};" & _
+	"SERVER=192.168.0.5;" & _
+	"DATABASE=" & pDATABASE & ";" & _
+	"UID=sa;PWD=engenharia8.@;"
+
 'Inicia a SubRotina
 
 'ABRIR CONEXAO COM SQL SERVER
@@ -39,7 +45,6 @@ If Err.Number <> 0 Then
 	Exit Sub
 End If
 
-
 'PESQUISA BANCO DE DADOS
 showLog strFuncName & ": Chamando a Query Count"
 Set rst = conn.Execute(SQL_TABLE_COUNT)
@@ -53,7 +58,6 @@ If Err.Number <> 0 Then
 	showLog strFuncName & ": Conexão com o MSSQL fechada"
 	rst = Nothing
 End If
-
 
 If Not (rst.EOF And rst.BOF) Then
     rst.MoveFirst
@@ -81,30 +85,30 @@ If Err.Number <> 0 Then
 	rst = Nothing
 End If
 
-If Not (rst.EOF And rst.BOF) Then 
+SmartTags("Debug") = 1
+
+showLog strFuncName & ": Limpando Dados Anteriores"
+For i=1 To 49
+	'Apaga toda a tabela do Array
+	SmartTags("TipoCarga_Modelo"&CStr(i)) = ""
+Next
+
+If Not (rst.EOF And rst.BOF) Then
 	'RETORNOU COM DADOS VÁLIDOS, PREENCHE TAGS:
 	showLog strFuncName & ": Encontrou Dados Válidos"
 	
 	rst.MoveFirst 'PRIMEIRO DADO DA TABEL
 
 	For i = 1 To num_linhas
+		tempID = CInt(rst.Fields(0).Value)
+		tempValue(tempID) = rst.Fields(1).Value
         showLog strFuncName & ": For:" & i & ": ID:" & rst.Fields(0).Value & " Value: " & rst.Fields(1).Value
-        If rst.Fields(1).Value = "" OR isNull(rst.Fields(1)) Then
-            showLog strFuncName & ": Nulos"
-            SmartTags("TipoCarga_Modelo[" & rst.Fields(0).Value & "]") = ""
-        Else
-            showLog strFuncName & ": Nao Nulos"
-            SmartTags("TipoCarga_Modelo[" & rst.Fields(0).Value & "]") = rst.Fields(1).Value
-        End If
+    	SmartTags("TipoCarga_Modelo"&CStr(tempID)) = tempValue(tempID)
 		rst.MoveNext
 	Next
 	rst.close 
 Else
 	showLog strFuncName & ": DADOS RETORNARAM VAZIOS!"
-	For i=1 To 49
-		'Apaga toda a tabela do Array
-        SmartTags("TipoCarga_Modelo[" & i & "]") = ""
-	Next
 End If
 
 If Err.Number <> 0 Then
