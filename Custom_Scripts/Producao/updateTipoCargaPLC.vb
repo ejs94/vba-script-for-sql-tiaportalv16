@@ -4,7 +4,7 @@ Sub updateTipoCargaPLC()
 ' Criado por: EJS
 'DECLARACAO DE TAGs
 Dim pDATABASE, conn, rst, SQL_TABLE_COUNT, SQL_TABLE, i, strFuncName, num_linhas, connStringTest
-Dim tempID, tempValue(49)
+Dim tempID, tempValue(49) 'Não é possivel passar um array inteiro para o PLC, deve ser utilizado uma tag por posição.
 
 On Error Resume Next
 
