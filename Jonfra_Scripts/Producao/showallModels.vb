@@ -6,7 +6,7 @@ Sub showallModels()
 'Ordenacao padrao = ID Descrescente
 ' Created: 10-08-2020
 ' Version: v1
-' Author:  EJS 
+' Author:  EJS
 '////////////////////////////////////////////////////////////////
 
 'DECLARACAO DE TAGs
@@ -70,15 +70,19 @@ If Not (rst.EOF And rst.BOF) Then
 			SmartTags("ID_Model_Value_" & i) = 0
 			SmartTags("ModelString_Value_" & i) = ""
 			SmartTags("ModelNameString_Value_" & i) = ""
+			SmartTags("DiametroCamisa_Value_" & i) = ""
+			
 		Else
 			'Caso algum valor seja NULL isso irá evitar a replicação do valor i Anterior
 			If IsNull(rst.Fields(0)) Then SmartTags("ID_Model_Value_" & i) = ""
 			If IsNull(rst.Fields(1)) Then SmartTags("ModelString_Value_" & i) = ""
 			If IsNull(rst.Fields(2)) Then SmartTags("ModelNameString_Value_" & i) = ""
+			If IsNull(rst.Fields(3)) Then SmartTags("DiametroCamisa_Value_" & i) = ""
 			'Condição para escrever em toda tela
 			SmartTags("ID_Model_Value_" & i) = rst.Fields(0).Value
 			SmartTags("ModelString_Value_" & i) = rst.Fields(1).Value
 			SmartTags("ModelNameString_Value_" & i) = rst.Fields(2).Value
+			SmartTags("DiametroCamisa_Value_" & i) = rst.Fields(3).Value
 
 			rst.MoveNext
 		End If
@@ -94,6 +98,7 @@ Else
 			SmartTags("ID_Model_Value_" & i) = 0
 			SmartTags("ModelString_Value_" & i) = ""
 			SmartTags("ModelNameString_Value_" & i) = ""
+			SmartTags("DiametroCamisa_Value_" & i) = ""
 	Next
 End If
 

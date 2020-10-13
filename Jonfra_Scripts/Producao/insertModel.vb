@@ -1,22 +1,40 @@
 Sub insertModel()
+'////////////////////////////////////////////////////////////////
+' Essa função é utilizada para inserir tipos de modelo de bloco na DB,
+' essa sub é chamada pela tela da IHM.
+' 
+' 
+' INPUT NECESSÀRIOS: TIPO DE CARGA, STRING MODELO, NOME DO MODELO, DIAMETRO DA PEÇA
+' INPUT OPCIONAIS: WWID do operador
+'
+' Created: 12-10-2020
+' Version: v0.7
+' Author:  EJS 
+'////////////////////////////////////////////////////////////////
+
 'Rotina irá escrever no Banco de Dados após confirmação das opções dispobnibilizadas.
 Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim Modelo , NomeModelo
+Dim ModeloString , NomeModelo, DiametroCamisa
 
 
 On Error Resume Next
-SmartTags("Ultimo_WWID") = "TesteVB"
+If IsNull(SmartTags("Ultimo_WWID")) Then
+    SmartTags("Ultimo_WWID") = "TesteVB"
+End If
+
+'Recebendo valores das Tags que são existentes na IHM
 Model_ID = SmartTags("edit_TipoCarga")
-Modelo = SmartTags("edit_ModelString")
+ModeloString = SmartTags("edit_ModelString")
 NomeModelo = SmartTags("edit_ModelNameString")
+DiametroCamisa = SmartTags("edit_diametroCamisa")
 
 'ABRIR CONEXAO
 Set conn = CreateObject("ADODB.Connection")
 Set rst = CreateObject("ADODB.Recordset")
 
-'ABRIR CONEXAO
-'Para conexão local (usando a IHM)
+'Opção para:
+'Conexão local (usando a IHM)
 conn.Open "DRIVER={SQL Server};" & _
 	"SERVER=.\SQLEXPRESS;" & _
 	"DATABASE=" & pDATABASE & ";" & _
@@ -31,13 +49,14 @@ If Err.Number <> 0 Then
 End If
 
 'Caso a ID seja válida então poderá ocorrer a alteranção no Banco de Dados
-If Model_ID <> 0 And Modelo <> "" And NomeModelo <> "" Then
+If Model_ID <> 0 And ModeloString <> "" And NomeModelo <> "" Then
     SQL_Table = "USE hmiDB; " &_
                 " INSERT INTO ModelosBlocos" &_
-                " (Modelo_id, ModeloString, NomeModelo)" &_
+                " (Modelo_id, ModeloString, NomeModelo, DiametroCamisa)" &_
                 " Values (" & Model_ID & ", " &_
-                "'" & Modelo & "', " &_
-                "'" & NomeModelo & "' );"
+                "'" & ModeloString & "', " &_
+                "'" & NomeModelo & "', " &_
+                "'" & DiametroCamisa & "' );"
                 
     
     Reg_Edit_Table =    "USE hmiDB; " &_
