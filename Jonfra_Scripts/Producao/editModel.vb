@@ -1,18 +1,33 @@
 Sub editModel()
-'Permite editar os modelos dos blocos que estão sendo utilizados pelos blocos
-'Todas as alterações são salvar em uma table do SQL Server
-'Criado por: Estêvão José dos Santos
+'////////////////////////////////////////////////////////////////
+' Permite editar os modelos dos blocos que estão sendo utilizados pelos blocos.
+' 
+' Todas as alterações são salvas em uma table do SQL Server.
+' 
+' INPUT NECESSÀRIOS: Modelo ID, STRING MODELO, NOME DO MODELO, DIAMETRO DA PEÇA
+' INPUT OPCIONAIS: WWID do operador
+'
+' Created: 12-10-2020
+' Version: v0.7
+' Author:  EJS 
+'////////////////////////////////////////////////////////////////
+
 
 Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim Modelo , NomeModelo
+Dim Modelo , NomeModelo, DiametroCamisa
 
 
 On Error Resume Next
-SmartTags("Ultimo_WWID") = "TesteVB"
+'WWID para teste, porém ao acessar esse número um WWID será inserido.
+If IsNull(SmartTags("Ultimo_WWID")) Then
+    SmartTags("Ultimo_WWID") = "TesteVB"
+End If
+
 Model_ID = SmartTags("select_ID_Model")
 Modelo = SmartTags("edit_ModelString")
 NomeModelo = SmartTags("edit_ModelNameString")
+DiametroCamisa = SmartTags("edit_diametroCamisa")
 
 'ABRIR CONEXAO
 Set conn = CreateObject("ADODB.Connection")
@@ -39,6 +54,7 @@ If Model_ID <> 0 Then
                 " UPDATE ModelosBlocos" &_
                 " SET ModeloString='" & Modelo & "'," &_
                 " NomeModelo='" & NomeModelo & "'" &_
+                " DiametroCamisa='" & DiametroCamisa & "'" &_
                 " WHERE Modelo_id=" & Model_ID & "; "
     
     Reg_Edit_Table =    "USE hmiDB; " &_

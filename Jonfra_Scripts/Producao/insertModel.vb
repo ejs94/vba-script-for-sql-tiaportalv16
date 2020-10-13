@@ -19,6 +19,7 @@ Dim ModeloString , NomeModelo, DiametroCamisa
 
 
 On Error Resume Next
+'WWID para teste, porém ao acessar esse número um WWID será inserido.
 If IsNull(SmartTags("Ultimo_WWID")) Then
     SmartTags("Ultimo_WWID") = "TesteVB"
 End If
