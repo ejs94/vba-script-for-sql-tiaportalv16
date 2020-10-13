@@ -17,6 +17,7 @@ Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
 Dim Modelo , NomeModelo, DiametroCamisa
 
+strFuncName = "editModel"
 
 On Error Resume Next
 'WWID para teste, porém ao acessar esse número um WWID será inserido.
@@ -42,7 +43,7 @@ conn.Open "DRIVER={SQL Server};" & _
 
 'Error routine - Rotina de Erro
 If Err.Number <> 0 Then
-	ShowSystemAlarm "Error #" & Err.Number & " " & Err.Description
+	ShowSystemAlarm strFuncName & ": Error #" & Err.Number & " " & Err.Description
 	Err.Clear
 	Set conn = Nothing
 	Exit Sub
@@ -53,7 +54,7 @@ If Model_ID <> 0 Then
     SQL_Table = "USE hmiDB; " &_
                 " UPDATE ModelosBlocos" &_
                 " SET ModeloString='" & Modelo & "'," &_
-                " NomeModelo='" & NomeModelo & "'" &_
+                " NomeModelo='" & NomeModelo & "'," &_
                 " DiametroCamisa='" & DiametroCamisa & "'" &_
                 " WHERE Modelo_id=" & Model_ID & "; "
     

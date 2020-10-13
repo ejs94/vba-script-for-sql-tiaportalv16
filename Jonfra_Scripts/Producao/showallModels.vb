@@ -12,7 +12,6 @@ Sub showallModels()
 'DECLARACAO DE TAGs
 Dim conn, rst, SQL_Table, strAscDesc, i, j, strFuncName
 
-
 On Error Resume Next
 
 strFuncName = "showallModels"

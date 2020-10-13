@@ -1,6 +1,14 @@
 Function queryAllModels(ByRef pConnection)
-'Query ao DB manipulada pelo VBA do Tia Portal
-' OrderBy deve ser uma String 'ASC' or 'DESC'
+'////////////////////////////////////////////////////////////////
+' Query ao DB manipulada pelo VBA do Tia Portal
+' essa sub é chamada pela tela da IHM.
+' 
+'
+' Created: 12-10-2020
+' Version: v0.7
+' Author:  EJS 
+'////////////////////////////////////////////////////////////////
+
 Dim rst, SQL_Table, strAscDesc, strFuncName
 
 'Essas Tags precisam ser criadas na IHM e associadas aos diplays de input
@@ -9,10 +17,8 @@ On Error Resume Next
 
 strFuncName = "queryAllModels"
 
-showLog "Entrei na query"
-
 SQL_Table = "USE hmiDB; " &_
-		"SELECT Modelo_id,ModeloString,NomeModelo From ModelosBlocos "
+		"SELECT Modelo_id, ModeloString, NomeModelo, DiametroCamisa From ModelosBlocos "
 
 'Ordena para padrão decrescente
 SQL_Table = SQL_Table & ";"
