@@ -3,6 +3,7 @@ Sub deletManPlan()
 Dim strFuncName, ManPlan_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
 
+'Tags
 pDATABASE = "hmiDB"
 strFuncName = "deletManPlan"
 
