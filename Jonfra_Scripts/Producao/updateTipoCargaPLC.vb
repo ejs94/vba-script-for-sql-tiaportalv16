@@ -1,10 +1,17 @@
 Sub updateTipoCargaPLC()
-'Esse Sub Serve para preencher um array no PLC, inserindo todos os modelos no Banco de Dados
-'Alterações na IPC irão afetar os modelos armazenados pelo PLC
-' Criado por: EJS
+'////////////////////////////////////////////////////////////////
+' Esse Sub Serve para preencher um array no PLC, inserindo todos os modelos no Banco de Dados
+' Alterações na IPC irão afetar os modelos armazenados pelo PLC
+' 
+'
+' Created: 13-10-2020
+' Version: v1.0
+' Author:  EJS 
+'////////////////////////////////////////////////////////////////
+
 'DECLARACAO DE TAGs
 Dim pDATABASE, conn, rst, SQL_TABLE_COUNT, SQL_TABLE, i, strFuncName, num_linhas, connStringTest
-Dim tempID, tempValue(49) 'Não é possivel passar um array inteiro para o PLC, deve ser utilizado uma tag por posição.
+Dim tempID 'Não é possivel passar um array inteiro para o PLC, deve ser utilizado uma tag por posição.
 
 On Error Resume Next
 
@@ -21,18 +28,20 @@ SQL_TABLE_COUNT = "SELECT COUNT(Modelo_id) AS Quantidade FROM ModelosBlocos WHER
 SQL_TABLE = " USE hmiDB;" &_
             " SELECT Modelo_id AS 'Tipo_Carga'" &_
                 " , ModeloString" &_
+                " , DiametroCamisa" &_
             " FROM ModelosBlocos" &_
             " WHERE ModeloString != '' AND Modelo_id BETWEEN 1 AND 49" &_
             " ORDER BY Modelo_id;"
 
-connStringTest = "DRIVER={SQL Server};" & _
-	"SERVER=192.168.0.5;" & _
-	"DATABASE=" & pDATABASE & ";" & _
-	"UID=sa;PWD=engenharia8.@;"
+'Para Testar em um banco de dados remoto -- TODO: Remover todas Strings de conexão de test e criar um tutorial sobre elas!
+'connStringTest = "DRIVER={SQL Server};" & _
+'	"SERVER=192.168.0.5;" & _
+'	"DATABASE=" & pDATABASE & ";" & _
+'	"UID=usuario;PWD=senha;"
 
 'Inicia a SubRotina
 
-'ABRIR CONEXAO COM SQL SERVER
+'ABRIR CONEXAO COM SQL SERVER LOCAL
 conn.Open "DRIVER={SQL Server};" & _
 	"SERVER=.\SQLEXPRESS;" & _
 	"DATABASE=" & pDATABASE & ";" & _
@@ -85,12 +94,11 @@ If Err.Number <> 0 Then
 	rst = Nothing
 End If
 
-SmartTags("Debug") = 1
-
 showLog strFuncName & ": Limpando Dados Anteriores"
 For i=1 To 49
 	'Apaga toda a tabela do Array
 	SmartTags("TipoCarga_Modelo"&CStr(i)) = ""
+	SmartTags("TipoCarga_TamanhoCamisa"&CStr(i)) = ""
 Next
 
 If Not (rst.EOF And rst.BOF) Then
@@ -101,9 +109,9 @@ If Not (rst.EOF And rst.BOF) Then
 
 	For i = 1 To num_linhas
 		tempID = CInt(rst.Fields(0).Value)
-		tempValue(tempID) = rst.Fields(1).Value
-        showLog strFuncName & ": For:" & i & ": ID:" & rst.Fields(0).Value & " Value: " & rst.Fields(1).Value
-    	SmartTags("TipoCarga_Modelo"&CStr(tempID)) = tempValue(tempID)
+        showLog strFuncName & ": For:" & i & ": ID:" & rst.Fields(0).Value & " Value: " & rst.Fields(1).Value & " Diametro: " & rst.Fields(2).Value
+    	SmartTags("TipoCarga_Modelo"&CStr(tempID)) = rst.Fields(1).Value
+		SmartTags("TipoCarga_TamanhoCamisa"&CStr(tempID)) = rst.Fields(2).Value
 		rst.MoveNext
 	Next
 	rst.close 
