@@ -24,64 +24,69 @@ conn.Open "DRIVER={SQL Server};" & _
 
 'Error routine - Rotina de Erro
 If Err.Number <> 0 Then
-	ShowSystemAlarm "Error #" & Err.Number & " " & Err.Description
+	ShowSystemAlarm strFuncName & ": Error #" & Err.Number & " " & Err.Description
 	Err.Clear
 	Set conn = Nothing
 	Exit Sub
 End If
 
 
-' Chaveamento para conversar com o text file do TIA PORTAL
+'Chaveamento para conversar com o text file do TIA PORTAL
 Select Case SmartTags("Edit_BB165_Field")
+    Case 0
+        OP10 = "Lib. Operacao"
     Case 1
-        OP10 = "Aprovada"
+        OP10 = "Trabalha"
     Case 2
-        OP10 = "Refugada"
+        OP10 = "Aprovada"
     Case 3
-        OP10 = "Lib. Op"
-    Case Else
-        OP10 = ""
+        OP10 = "Refugo"
+    Case 4
+        OP10 = "Medicao"
 End Select
 Select Case SmartTags("Edit_BB165_Field")
+    Case 0
+        OP20 = "Lib. Operacao"
     Case 1
-        OP20 = "Aprovada"
+        OP20 = "Trabalha"
     Case 2
-        OP20 = "Refugada"
+        OP20 = "Aprovada"
     Case 3
-        OP20 = "Lib. Op"
-    Case Else
-        OP20 = ""
+        OP20 = "Refugo"
+    Case 4
+        OP20 = "Medicao"
 End Select
 Select Case SmartTags("Edit_BB175_Field")
+    Case 0
+        OP30 = "Lib. Operacao"
     Case 1
-        OP30 = "Aprovada"
+        OP30 = "Trabalha"
     Case 2
-        OP30 = "Refugada"
+        OP30 = "Aprovada"
     Case 3
-        OP30 = "Lib. Op"
-    Case Else
-        OP30 = ""
+        OP30 = "Refugo"
+    Case 4
+        OP30 = "Medicao"
 End Select
 Select Case SmartTags("Edit_BB185_Field")
+    Case 0
+        OP40 = "Lib. Operacao"
     Case 1
-        OP40 = "Aprovada"
+        OP40 = "Trabalha"
     Case 2
-        OP40 = "Refugada"
+        OP40 = "Aprovada"
     Case 3
-        OP40 = "Lib. Op"
-    Case Else
-        OP40 = ""
+        OP40 = "Refugo"
+    Case 4
+        OP40 = "Medicao"
 End Select
 
 Select Case SmartTags("Edit_Inspecao_Field")
+    Case 0
+        Inpec = "Nao"
     Case 1
         Inpec = "Sim"
-    Case 2
-        Inpec = "Nao"
-    Case Else
-        Inpec = ""
 End Select
-
 
 'Caso a ID seja válida então poderá ocorrer a alteranção no Banco de Dados
 If ProductionID <> 0 Then
@@ -104,9 +109,9 @@ If ProductionID <> 0 Then
 'EXECUTA COMANDO SQL
     Set rst = conn.Execute(SQL_Table)
     Set rst = conn.Execute(Reg_Edit_Table)
-    showLog strFuncName & "Dados Atualizados"
-    showLog "SQL Table: " & SQL_Table
-    showLog "Reg Table: " & Reg_Edit_Table
+    showLog strFuncName & ": Dados Atualizados"
+    showLog strFuncName & ": SQL Table: " & SQL_Table
+    showLog strFuncName & ": Reg Table: " & Reg_Edit_Table
 
 End If
 

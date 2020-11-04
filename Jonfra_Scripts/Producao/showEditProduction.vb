@@ -22,7 +22,7 @@ conn.Open "DRIVER={SQL Server};" & _
 
 'Error routine - Rotina de Erro
 If Err.Number <> 0 Then
-	ShowSystemAlarm "Error #" & Err.Number & " " & Err.Description
+	ShowSystemAlarm strFuncName & ": Error #" & Err.Number & " " & Err.Description
 	Err.Clear
 	Set conn = Nothing
 	Exit Sub
@@ -44,7 +44,7 @@ If Not (rst.EOF And rst.BOF) Then
 	'Compare if "End of File" or "Begin of File" exists, if not the pointer will be reset to the first entry
 	
 	rst.MoveFirst 'reset to 1st entry
-    showLog rst.Fields(1).Value
+    showLog strFuncName & "Teste Value: " & rst.Fields(1).Value
 
     If IsNull(rst.Fields(0)) Then SmartTags("Edit_PN_Value") = "NULL"
 	If IsNull(rst.Fields(1)) Then SmartTags("Edit_NomeModelo_Value") = "NULL"
@@ -52,57 +52,71 @@ If Not (rst.EOF And rst.BOF) Then
 	SmartTags("Edit_NomeModelo_Value") = rst.Fields(1).Value
 
     Select Case rst.Fields(2).Value
-        Case "Aprovada"
+        Case "Lib. Operacao"
+            SmartTags("Edit_BB155_Field") = 0
+        Case "Trabalha"
             SmartTags("Edit_BB155_Field") = 1
-        Case "Refugada"
+        Case "Aprovada"
             SmartTags("Edit_BB155_Field") = 2
-        Case "Lib. Op"
+        Case "Refugo"
             SmartTags("Edit_BB155_Field") = 3
+        Case "Medicao"
+            SmartTags("Edit_BB155_Field") = 4
         Case Else
             SmartTags("Edit_BB155_Field") = 0
     End Select
 
     Select Case rst.Fields(3).Value
-        Case "Aprovada"
+        Case "Lib. Operacao"
+            SmartTags("Edit_BB165_Field") = 0
+        Case "Trabalha"
             SmartTags("Edit_BB165_Field") = 1
-        Case "Refugada"
+        Case "Aprovada"
             SmartTags("Edit_BB165_Field") = 2
-        Case "Lib. Op"
+        Case "Refugo"
             SmartTags("Edit_BB165_Field") = 3
+        Case "Medicao"
+            SmartTags("Edit_BB165_Field") = 4
         Case Else
             SmartTags("Edit_BB165_Field") = 0
     End Select
 
     Select Case rst.Fields(4).Value
-        Case "Aprovada"
+        Case "Lib. Operacao"
+            SmartTags("Edit_BB175_Field") = 0
+        Case "Trabalha"
             SmartTags("Edit_BB175_Field") = 1
-        Case "Refugada"
+        Case "Aprovada"
             SmartTags("Edit_BB175_Field") = 2
-        Case "Lib. Op"
+        Case "Refugo"
             SmartTags("Edit_BB175_Field") = 3
+        Case "Medicao"
+            SmartTags("Edit_BB175_Field") = 4
         Case Else
             SmartTags("Edit_BB175_Field") = 0
     End Select
 
     Select Case rst.Fields(5).Value
-        Case "Aprovada"
+        Case "Lib. Operacao"
+            SmartTags("Edit_BB185_Field") = 0
+        Case "Trabalha"
             SmartTags("Edit_BB185_Field") = 1
-        Case "Refugada"
+        Case "Aprovada"
             SmartTags("Edit_BB185_Field") = 2
-        Case "Lib. Op"
+        Case "Refugo"
             SmartTags("Edit_BB185_Field") = 3
+        Case "Medicao"
+            SmartTags("Edit_BB185_Field") = 4
         Case Else
             SmartTags("Edit_BB185_Field") = 0
     End Select
 
 
     Select Case rst.Fields(6).Value
+        Case "Nao"
+            SmartTags("Edit_Inspecao_Field") = 0
         Case "Sim"
             SmartTags("Edit_Inspecao_Field") = 1
-        Case "Nao"
-            SmartTags("Edit_Inspecao_Field") = 2
-        Case Else
-            SmartTags("Edit_Inspecao_Field") = 0
     End Select
 	
 	rst.close

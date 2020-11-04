@@ -28,7 +28,7 @@ conn.Open "DRIVER={SQL Server};" & _
 
 'Error routine - Rotina de Erro
 If Err.Number <> 0 Then
-	ShowSystemAlarm "Error #" & Err.Number & " " & Err.Description
+	ShowSystemAlarm strFuncName & " : Error #" & Err.Number & " " & Err.Description
 	Err.Clear
 	Set conn = Nothing
 	Exit Sub
@@ -37,7 +37,7 @@ End If
 'Export sempre na ordem de ID, ASCendente
 
 'Busca
-showLog "Chamando Select"
+showLog strFuncName & ": Chamando Select"
 Set rst = queryProduction(conn,"ASC")
 	
 
@@ -65,7 +65,7 @@ If Not (rst.EOF And rst.BOF) Then
 
 	ObjFile.WriteLine(Cabecalho)
 	ObjFileTmp.WriteLine(Cabecalho)
-	showLog "Cabecalho"
+	showLog strFuncName & ": Cabecalho"
 
 	rst.MoveFirst 'VOLTA AO PRIMEIRO DADO RECEBIDO 
 	
@@ -92,7 +92,7 @@ If Not (rst.EOF And rst.BOF) Then
 	SmartTags("Custom_MSG_Text") = "Em :" & StrFileName
 
 Else
-	showLog  "DADOS RETORNARAM VAZIOS!"
+	showLog strFuncName & ": DADOS RETORNARAM VAZIOS!"
 	
 End If
 
@@ -115,7 +115,5 @@ ObjFile.Close
 
 Set rst = Nothing
 Set conn = Nothing
-
-
 
 End Sub

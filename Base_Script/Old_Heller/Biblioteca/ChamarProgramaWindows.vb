@@ -7,7 +7,7 @@ If shell.AppActivate(pTituloJanelaAltTab)Then
     shell.AppActivate pTituloJanelaAltTab 
 Else 
     shell.Run pComandoCaminho
-    StartProgram pComandoCaminho,pComandoParams, hmiShowMinimizedAndInactive, hmiYes
+    shell.StartProgram pComandoCaminho,pComandoParams, hmiShowMinimizedAndInactive, hmiYes
 End If
 
 Set shell = Nothing

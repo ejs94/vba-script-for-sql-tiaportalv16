@@ -14,7 +14,7 @@ On Error Resume Next
 
 strFuncName = "queryProduction"
 
-showLog "Entrei na query"
+showLog queryProduction & ": Entrou na query"
 
 SQL_Table = "USE hmiDB; " &_
 		"SELECT S.Producao_id, B.PNSerialString, M.ModeloString, M.NomeModelo, S.opBB155, S.opBB165, S.opBB175, S.opBB185, S.inspecao, B.dt_Entrada, S.dt_Saida " &_
@@ -34,7 +34,7 @@ End If
 SQL_Table = SQL_Table & " ORDER BY S.dt_Saida " & OrderBy & ", S.Producao_id " & OrderBy & ";"
 
 'Se o Debug estiver ativado
-showLog "Select: " & SQL_Table
+showLog queryProduction & " Select: " & SQL_Table
 
 'EXECUTA COMANDO SQL
 Set rst = pConnection.Execute(SQL_Table)
@@ -50,7 +50,7 @@ If Err.Number <> 0 Then
 	rst = Nothing
 End If
 
-showLog "Retornando ResultSet"
+showLog queryProduction & " Retornando ResultSet"
 
 'Retorna Resultset da pesquisa
 Set queryProduction = rst

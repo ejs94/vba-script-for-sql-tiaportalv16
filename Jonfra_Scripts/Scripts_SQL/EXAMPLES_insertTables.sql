@@ -14,15 +14,17 @@ INSERT INTO RegEntradaBlocos
     (PNSerialString,Modelo_id,DataString,dt_Entrada)
 Values('FFE364', 30, '17/04/20', GETDATE());
 
+--- FAZER SCIPT DE REGISTRO DE BLOCOS
 --- Registro de Entrada de Blocos com SubQuery
+USE hmiDB;
 INSERT INTO RegEntradaBlocos
     (PNSerialString,Modelo_id,DataString,dt_Entrada)
 Values
-    ( 'FFFEEE',
-        (SELECT IFNULL(Modelo_id, 'Nao Reg')
-        FROM ModeloBlocos
-        WHERE ModeloString='364'), --- Se o modelo não estiver na tabela o valor será NULL
-        '18/05/20',
+    ( '10123',
+        (SELECT Modelo_id
+        FROM ModelosBlocos
+        WHERE ModeloString='3932'), --- Se o modelo não estiver na tabela o valor será NULL
+        '18/09/20',
         GETDATE());
 
 --- Registro de Blocos na Saída
@@ -33,7 +35,7 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FFF124'),
-        'Okey', 'Okey', 'Okey', 'Okey', 'Nao', GETDATE());
+        'Aprovada', 'Aprovada', 'Aprovada', 'Aprovada', 'Nao', GETDATE());
 
 --- Registro quando o bloco sai da celula
 INSERT INTO RegSaidaBlocos
@@ -42,4 +44,4 @@ Values
     ((SELECT Bloco_id
         FROM RegEntradaBlocos
         WHERE PNSerialString='FFE364'),
-        'Okey', 'Okey', 'N Okey', 'Okey', 'Sim', GETDATE());
+        'Aprovada', 'Aprovada', 'Refugada', 'Lib. OP', 'Nao', GETDATE());

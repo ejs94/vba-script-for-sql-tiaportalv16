@@ -98,7 +98,7 @@ showLog strFuncName & ": Limpando Dados Anteriores"
 For i=1 To 49
 	'Apaga toda a tabela do Array
 	SmartTags("TipoCarga_Modelo"&CStr(i)) = ""
-	SmartTags("TipoCarga_TamanhoCamisa"&CStr(i)) = ""
+	SmartTags("TipoCarga_TamanhoCamisa"&CStr(i)) = 0
 Next
 
 If Not (rst.EOF And rst.BOF) Then

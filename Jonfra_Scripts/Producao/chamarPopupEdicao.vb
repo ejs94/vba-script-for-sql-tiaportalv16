@@ -2,7 +2,12 @@ Sub chamarPopupEdicao()
 'Permite editar a peça após o input do WWID
 'Essa rotinha chama a PopUp Edit_Prod
 'Made by: Estevao J Santos
+Dim strFuncName
+
+strFuncName = "queryAllModels"
+
 On Error Resume Next
+
 
 'Just work if the PLCTag is Boolean
 If SmartTags("Ultimo_WWID") <> "" Then
@@ -14,7 +19,7 @@ End If
 
 'Error routine - Fehlerroutine
 If Err.Number <> 0 Then
-	ShowSystemAlarm "Error #" & Err.Number & " " & Err.Description
+	ShowSystemAlarm strFuncName & ": Error #" & Err.Number & " " & Err.Description
 	Err.Clear
 	Exit Sub
 End If

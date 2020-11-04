@@ -1,4 +1,4 @@
-Sub checkReqRetrabalho(ByRef PLCReq, ByRef IHMResposta)
+Sub checkReqRetrabalho(ByRef PLCReq)
 'Esse foi um fix para criar um script que permita o PLC escrever de forma autonoma no SQLServer:
 ' 1. Crie uma Tag Booleana na Ladder
 ' 2. Exporte essa Tag para a IHM
@@ -12,16 +12,30 @@ strFuncName = "checkReqRetrabalho"
 
 On Error Resume Next
 
+SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho") = False
+SmartTags("DB110_IHM_IPC.Completo_CheckPorRetrabalho") = False
+
 'Just work if the PLCTag is Boolean
 If PLCReq = True Then
-	Call searchRetrabalho()
-    IHMResposta = True
+    showLog strFuncName & ": Ativou"
+	If Not searchRetrabalho() Then
+        SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho") = False
+        SmartTags("DB110_IHM_IPC.Completo_CheckPorRetrabalho") = True
+        showLog strFuncName & ": DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho = " & SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho")
+        showLog strFuncName & ": DB110_IHM_IPC.Completo_CheckPorRetrabalho = " & SmartTags("DB110_IHM_IPC.Completo_CheckPorRetrabalho")
+        Exit Sub
+    End If
+
     Call ShowPopupScreen("Bloco_Retrabalho_Setup",454,167,hmiOn,hmiBottom,hmiMedium)
     SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho") = True
-ElseIf PLCReq = False Then
-    IHMResposta = False
-    SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho") = False
+    SmartTags("DB110_IHM_IPC.Completo_CheckPorRetrabalho") = True
+    showLog strFuncName & ": DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho = " & SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho")
+    showLog strFuncName & ": DB110_IHM_IPC.Completo_CheckPorRetrabalho = " & SmartTags("DB110_IHM_IPC.Completo_CheckPorRetrabalho")
+    Exit Sub
+
 End If
+
+showLog strFuncName & ": Não Ativou"
 
 'Error routine - Fehlerroutine
 If Err.Number <> 0 Then

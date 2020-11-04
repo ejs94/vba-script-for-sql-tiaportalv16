@@ -13,7 +13,7 @@ Set objWshShell = CreateObject("Wscript.Shell")
 objWshShell.Run MyFolder
 
 If Err.Number<>0 Then
-	ShowSystemAlarm "Erro " & Err.Number & strFuncName & ":" & Err.Description & ", " & "Erro ao Executar Comando objWshShell.Run"
+	ShowSystemAlarm strFuncName & ": Erro# " & Err.Number & ":" & Err.Description & ", " & "Erro ao Executar Comando objWshShell.Run"
 	Err.Clear
 End If
 
@@ -25,10 +25,10 @@ objWshShell.Exec "C:\Program Files (x86)\CSV Viewer\CSVViewer.exe " & MyFolder
 
 Set objWshShell=Nothing
 
-showLog "C:\Program Files (x86)\CSV Viewer\CSVViewer.exe " & MyFolder
+showLog strFuncName & " C:\Program Files (x86)\CSV Viewer\CSVViewer.exe " & MyFolder
 
 If Err.Number<>0 Then 
-	ShowSystemAlarm "Erro ao Executar Comando objWshShell.Exec " & "C:\Program Files (x86)\CSV Viewer\CSVViewer.exe " & MyFolder & ", " & strFuncName
+	ShowSystemAlarm strFuncName & " : Erro ao Executar Comando objWshShell.Exec " & "C:\Program Files (x86)\CSV Viewer\CSVViewer.exe " & MyFolder
 	Err.Clear
 End If
 

@@ -1,6 +1,6 @@
 Function queryAllModels(ByRef pConnection)
 '////////////////////////////////////////////////////////////////
-' Query ao DB manipulada pelo VBA do Tia Portal
+' Query ao SQL Server instalado na IPC, irá buscar todoso so modelos dos blocos de motor,
 ' essa sub é chamada pela tela da IHM.
 ' 
 '
@@ -9,7 +9,7 @@ Function queryAllModels(ByRef pConnection)
 ' Author:  EJS 
 '////////////////////////////////////////////////////////////////
 
-Dim rst, SQL_Table, strAscDesc, strFuncName
+Dim rst, SQL_Table, strFuncName
 
 'Essas Tags precisam ser criadas na IHM e associadas aos diplays de input
 
@@ -24,7 +24,7 @@ SQL_Table = "USE hmiDB; " &_
 SQL_Table = SQL_Table & ";"
 
 'Se o Debug estiver ativado
-showLog "Select: " & SQL_Table
+showLog strFuncName & " Select: " & SQL_Table
 
 'EXECUTA COMANDO SQL
 Set rst = pConnection.Execute(SQL_Table)
@@ -39,7 +39,7 @@ If Err.Number <> 0 Then
 	rst = Nothing
 End If
 
-showLog "Retornando ResultSet"
+showLog strFuncName & " Retornando ResultSet"
 
 'Retorna Resultset da pesquisa
 Set queryAllModels = rst

@@ -10,7 +10,7 @@ Sub showallModels()
 '////////////////////////////////////////////////////////////////
 
 'DECLARACAO DE TAGs
-Dim conn, rst, SQL_Table, strAscDesc, i, j, strFuncName
+Dim conn, rst, SQL_Table, i, j, strFuncName
 
 On Error Resume Next
 
@@ -69,14 +69,14 @@ If Not (rst.EOF And rst.BOF) Then
 			SmartTags("ID_Model_Value_" & i) = 0
 			SmartTags("ModelString_Value_" & i) = ""
 			SmartTags("ModelNameString_Value_" & i) = ""
-			SmartTags("DiametroCamisa_Value_" & i) = ""
+			SmartTags("DiametroCamisa_Value_" & i) = 0
 			
 		Else
 			'Caso algum valor seja NULL isso irá evitar a replicação do valor i Anterior
 			If IsNull(rst.Fields(0)) Then SmartTags("ID_Model_Value_" & i) = ""
 			If IsNull(rst.Fields(1)) Then SmartTags("ModelString_Value_" & i) = ""
 			If IsNull(rst.Fields(2)) Then SmartTags("ModelNameString_Value_" & i) = ""
-			If IsNull(rst.Fields(3)) Then SmartTags("DiametroCamisa_Value_" & i) = ""
+			If IsNull(rst.Fields(3)) Then SmartTags("DiametroCamisa_Value_" & i) = 0
 			'Condição para escrever em toda tela
 			SmartTags("ID_Model_Value_" & i) = rst.Fields(0).Value
 			SmartTags("ModelString_Value_" & i) = rst.Fields(1).Value
@@ -97,7 +97,7 @@ Else
 			SmartTags("ID_Model_Value_" & i) = 0
 			SmartTags("ModelString_Value_" & i) = ""
 			SmartTags("ModelNameString_Value_" & i) = ""
-			SmartTags("DiametroCamisa_Value_" & i) = ""
+			SmartTags("DiametroCamisa_Value_" & i) = 0
 	Next
 End If
 
