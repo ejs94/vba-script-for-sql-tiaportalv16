@@ -19,6 +19,7 @@ On Error Resume Next
 SerialString = SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.QRCode.SerialString")
 ModeloString = SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.QRCode.ModeloString")
 DataSerial = SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.QRCode.DataString")
+showLog strFuncName & " :DataSerial: " & DataSerial
 'Ultimo Part Status atualizados pelas operações nas máquinas
 
 Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.MCH250")
