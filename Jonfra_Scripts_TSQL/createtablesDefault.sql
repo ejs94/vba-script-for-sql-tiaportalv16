@@ -8,7 +8,7 @@ CREATE TABLE ModelosBlocos
 	Modelo_id INT PRIMARY KEY,
 	ModeloString VARCHAR(7) NOT NULL UNIQUE,
 	NomeModelo VARCHAR(40) NOT NULL UNIQUE,
-	DiametroCamisa INT NOT NULL,
+	DiametroCamisa INT NOT NULL
 );
 
 --- Tabela de registro de blocos na entrada
