@@ -15,7 +15,7 @@ Sub editModel()
 
 Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim Modelo , NomeModelo, DiametroCamisa
+Dim Modelo , NomeModelo, DiametroCamisa, TamanhoCilindro
 
 strFuncName = "editModel"
 
@@ -28,7 +28,9 @@ End If
 Model_ID = SmartTags("select_ID_Model")
 Modelo = SmartTags("edit_ModelString")
 NomeModelo = SmartTags("edit_ModelNameString")
-DiametroCamisa = SmartTags("edit_diametroCamisa")
+DiametroCamisa = SmartTags("edit_diametroCamisa") 'Verificar se estão definifos como inteiro.
+TamanhoCilindro = SmartTags("edit_TamanhoCilindro") 'Criar uma tag com esse nome na HMI Tags.
+
 
 'ABRIR CONEXAO
 Set conn = CreateObject("ADODB.Connection")
@@ -55,7 +57,8 @@ If Model_ID <> 0 Then
                 " UPDATE ModelosBlocos" &_
                 " SET ModeloString='" & Modelo & "'," &_
                 " NomeModelo='" & NomeModelo & "'," &_
-                " DiametroCamisa='" & DiametroCamisa & "'" &_
+                " DiametroCamisa=" & DiametroCamisa & "," &_
+                " TamanhoBloco= " & TamanhoCilindro &_
                 " WHERE Modelo_id=" & Model_ID & "; "
     
     Reg_Edit_Table =    "USE hmiDB; " &_

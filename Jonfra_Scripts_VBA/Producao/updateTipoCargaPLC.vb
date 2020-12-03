@@ -29,6 +29,7 @@ SQL_TABLE = " USE hmiDB;" &_
             " SELECT Modelo_id AS 'Tipo_Carga'" &_
                 " , ModeloString" &_
                 " , DiametroCamisa" &_
+				" , TamanhoBloco" &_
             " FROM ModelosBlocos" &_
             " WHERE ModeloString != '' AND Modelo_id BETWEEN 1 AND 49" &_
             " ORDER BY Modelo_id;"
@@ -99,6 +100,7 @@ For i=1 To 49
 	'Apaga toda a tabela do Array
 	SmartTags("TipoCarga_Modelo"&CStr(i)) = ""
 	SmartTags("TipoCarga_TamanhoCamisa"&CStr(i)) = 0
+	SmartTags("TipoCarga_Bloco4ou6Cil"&CStr(i)) = 0
 Next
 
 If Not (rst.EOF And rst.BOF) Then
@@ -109,9 +111,10 @@ If Not (rst.EOF And rst.BOF) Then
 
 	For i = 1 To num_linhas
 		tempID = CInt(rst.Fields(0).Value)
-        showLog strFuncName & ": For:" & i & ": ID:" & rst.Fields(0).Value & " Value: " & rst.Fields(1).Value & " Diametro: " & rst.Fields(2).Value
+        showLog strFuncName & ": For:" & i & ": ID:" & rst.Fields(0).Value & " Value: " & rst.Fields(1).Value & " Diametro: " & rst.Fields(2).Value & " Cilindros: " & rst.Fields(3).Value
     	SmartTags("TipoCarga_Modelo"&CStr(tempID)) = rst.Fields(1).Value
 		SmartTags("TipoCarga_TamanhoCamisa"&CStr(tempID)) = rst.Fields(2).Value
+		SmartTags("TipoCarga_Bloco4ou6Cil"&CStr(tempID)) = rst.Fields(3).Value
 		rst.MoveNext
 	Next
 	rst.close 

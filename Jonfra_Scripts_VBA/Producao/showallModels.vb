@@ -70,6 +70,8 @@ If Not (rst.EOF And rst.BOF) Then
 			SmartTags("ModelString_Value_" & i) = ""
 			SmartTags("ModelNameString_Value_" & i) = ""
 			SmartTags("DiametroCamisa_Value_" & i) = 0
+			SmartTags("TamanhoCilindro_Value_" & i) = 0 'Criar variavel de 1 ao 49, tome como exemplo DiametroCamisa
+
 			
 		Else
 			'Caso algum valor seja NULL isso irá evitar a replicação do valor i Anterior
@@ -82,6 +84,7 @@ If Not (rst.EOF And rst.BOF) Then
 			SmartTags("ModelString_Value_" & i) = rst.Fields(1).Value
 			SmartTags("ModelNameString_Value_" & i) = rst.Fields(2).Value
 			SmartTags("DiametroCamisa_Value_" & i) = rst.Fields(3).Value
+			SmartTags("TamanhoCilindro_Value_" & i) = rst.Fields(4).Value
 
 			rst.MoveNext
 		End If
@@ -98,6 +101,7 @@ Else
 			SmartTags("ModelString_Value_" & i) = ""
 			SmartTags("ModelNameString_Value_" & i) = ""
 			SmartTags("DiametroCamisa_Value_" & i) = 0
+			SmartTags("TamanhoCilindro_Value_" & i) = 0
 	Next
 End If
 

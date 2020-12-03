@@ -18,7 +18,7 @@ On Error Resume Next
 strFuncName = "queryAllModels"
 
 SQL_Table = "USE hmiDB; " &_
-		"SELECT Modelo_id, ModeloString, NomeModelo, DiametroCamisa From ModelosBlocos "
+		"SELECT Modelo_id, ModeloString, NomeModelo, DiametroCamisa, TamanhoBloco From ModelosBlocos "
 
 'Ordena para padrão decrescente
 SQL_Table = SQL_Table & ";"
