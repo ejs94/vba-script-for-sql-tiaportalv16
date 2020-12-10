@@ -26,7 +26,7 @@ If PLCReq = True Then
         Exit Sub
     End If
 
-    Call ShowPopupScreen("Bloco_Retrabalho_Setup",454,167,hmiOn,hmiBottom,hmiMedium)
+    Call ShowPopupScreen("Bloco_Retrabalho_Setup",454,167,hmiOn,hmiBottom,hmiMedium) 'Chamar Popup
     SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho") = True
     SmartTags("DB110_IHM_IPC.Completo_CheckPorRetrabalho") = True
     showLog strFuncName & ": DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho = " & SmartTags("DB110_IHM_IPC.EsteiraEntrada_ChamaPopUpRetrabalho")
