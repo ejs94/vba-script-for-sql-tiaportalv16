@@ -28,11 +28,17 @@ Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.
     Case 1
         MCH250 = "Trabalha"
     Case 2
-        MCH250 = "Aprovada"
+        MCH250 = "Aprovada P1"
     Case 3
-        MCH250 = "Refugo"
+        MCH250 = "Refugo P1"
     Case 4
-        MCH250 = "Medicao"
+        MCH250 = "Medicao P1"
+	Case 5
+		MCH250 = "Aprovada P2"
+	Case 6
+        MCH250 = "Refugo P2"
+    Case 7
+        MCH250 = "Medicao P2"
 End Select
 
 Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.MCH350")
@@ -41,24 +47,36 @@ Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.
     Case 1
         MCH350 = "Trabalha"
     Case 2
-        MCH350 = "Aprovada"
+        MCH350 = "Aprovada P1"
     Case 3
-        MCH350 = "Refugo"
+        MCH350 = "Refugo P1"
     Case 4
-        MCH350 = "Medicao"
+        MCH350 = "Medicao P1"
+    Case 5
+		MCH350 = "Aprovada P2"
+	Case 6
+        MCH350 = "Refugo P2"
+    Case 7
+        MCH350 = "Medicao P2"
 End Select
 
 Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.G704")
     Case 0
-        G704 = "Lib. Operacao"
+        MCH350 = "Lib. Operacao"
     Case 1
-        G704 = "Trabalha"
+        MCH350 = "Trabalha"
     Case 2
-        G704 = "Aprovada"
+        MCH350 = "Aprovada P1"
     Case 3
-        G704 = "Refugo"
+        MCH350 = "Refugo P1"
     Case 4
-        G704 = "Medicao"
+        MCH350 = "Medicao P1"
+    Case 5
+		MCH350 = "Aprovada P2"
+	Case 6
+        MCH350 = "Refugo P2"
+    Case 7
+        MCH350 = "Medicao P2"
 End Select
 
 Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.G516")
@@ -75,9 +93,11 @@ Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.
 End Select
 
 Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.Operação.Medir")
-    Case True
+    Case 0
+        Medir = "Nao"
+    Case 1
         Medir = "Sim"
-    Case False
+    Case Else
         Medir = "Nao"
 End Select
 
@@ -110,7 +130,7 @@ If SerialString <> "" And ModeloString <> "" Then
         " FROM RegEntradaBlocos " &_
         " WHERE PNSerialString='" & SerialString & "' " &_
         " ORDER BY Bloco_id DESC), " &_
-        " '" & MCH250 & "', '" & MCH350 & "', '" & G704 & "', " & G516 & ", '" & Medir & "', GETDATE());"
+        " '" & MCH250 & "', '" & MCH350 & "', '" & G704 & "',' " & G516 & "', '" & Medir & "', GETDATE());"
 
 'Se o Debug estiver ativado
 'showLog  strFuncName & " Select: " & SQL_Table

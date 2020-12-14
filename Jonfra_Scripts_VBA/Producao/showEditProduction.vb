@@ -56,12 +56,18 @@ If Not (rst.EOF And rst.BOF) Then
             SmartTags("Edit_BB155_Field") = 0
         Case "Trabalha"
             SmartTags("Edit_BB155_Field") = 1
-        Case "Aprovada"
+        Case "Aprovada P1"
             SmartTags("Edit_BB155_Field") = 2
-        Case "Refugo"
+        Case "Refugo P1"
             SmartTags("Edit_BB155_Field") = 3
-        Case "Medicao"
+        Case "Medicao P1"
             SmartTags("Edit_BB155_Field") = 4
+        Case "Aprovada P2"
+            SmartTags("Edit_BB155_Field") = 5
+        Case "Refugo P2"
+            SmartTags("Edit_BB155_Field") = 6
+        Case "Medicao P2"
+            SmartTags("Edit_BB155_Field") = 7
         Case Else
             SmartTags("Edit_BB155_Field") = 0
     End Select
@@ -71,12 +77,18 @@ If Not (rst.EOF And rst.BOF) Then
             SmartTags("Edit_BB165_Field") = 0
         Case "Trabalha"
             SmartTags("Edit_BB165_Field") = 1
-        Case "Aprovada"
+        Case "Aprovada P1"
             SmartTags("Edit_BB165_Field") = 2
-        Case "Refugo"
+        Case "Refugo P1"
             SmartTags("Edit_BB165_Field") = 3
-        Case "Medicao"
+        Case "Medicao P1"
             SmartTags("Edit_BB165_Field") = 4
+        Case "Aprovada P2"
+            SmartTags("Edit_BB165_Field") = 5
+        Case "Refugo P2"
+            SmartTags("Edit_BB165_Field") = 6
+        Case "Medicao P2"
+            SmartTags("Edit_BB165_Field") = 7
         Case Else
             SmartTags("Edit_BB165_Field") = 0
     End Select
