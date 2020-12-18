@@ -54,14 +54,15 @@ WHERE S.dt_Saida BETWEEN CAST(CONVERT(date,GETDATE()-1) AS varchar)+' 22:00:00' 
 
 
 --- Essa String que irá ser utilizada no FormGuide
+--- COSULTA PARA TESTAR O FORMGUIDE
 USE hmiDB;
 
-SELECT S.dt_Saida,B.PNSerialString
+SELECT S.dt_Saida,B.PNSerialString, opBB155 AS MCH250, opBB165 AS MCH350, opBB175 AS G704,LTRIM(opBB185) AS G516
 FROM RegEntradaBlocos AS B
     JOIN RegSaidaBlocos AS S ON B.Bloco_id = S.Bloco_id
     LEFT JOIN ModelosBlocos AS M ON B.Modelo_id = M.Modelo_id
 --- Pega todos os valores dentro de um Intervalo de tempo
-WHERE S.dt_Saida BETWEEN CAST(CONVERT(date,GETDATE()) AS varchar)+' 22:00:00' AND CAST(CONVERT(date,GETDATE()) AS varchar)+' 23:00:00' 
+WHERE S.dt_Saida BETWEEN CAST(CONVERT(date,GETDATE()) AS varchar)+' 2:00:00' AND CAST(CONVERT(date,GETDATE()) AS varchar)+' 3:00:00' 
 ORDER BY S.dt_Saida
 
 USE hmiDB;
@@ -83,15 +84,15 @@ SELECT
 		WHEN opBB155 = 'Refugo P1' or opBB155 = 'Refugo P2' 
 			or opBB165 = 'Refugo P1' or opBB165 = 'Refugo P2'
 			or opBB175 = 'Refugo' 
-			or LTRIM(opBB185) = 'Refugo' THEN 1 END) As Nao_Conforme
-
+			or LTRIM(opBB185) = 'Refugo' 
+			or ( opBB155 = 'Trabalha' AND opBB165 = 'Trabalha' AND opBB175 = 'Trabalha' AND LTRIM(opBB185) = 'Trabalha') THEN 1 END) As Nao_Conforme
 FROM RegEntradaBlocos AS B
     JOIN RegSaidaBlocos AS S ON B.Bloco_id = S.Bloco_id
-WHERE S.dt_Saida BETWEEN CAST(CONVERT(date,GETDATE()) AS varchar)+' 22:00:00' AND CAST(CONVERT(date,GETDATE()) AS varchar)+' 23:00:00'
+WHERE S.dt_Saida BETWEEN CAST(CONVERT(date,GETDATE()) AS varchar)+' 2:00:00' AND CAST(CONVERT(date,GETDATE()) AS varchar)+' 3:00:00'
 
 
 USE hmiDB;
-SELECT COUNT(S.Producao_id)
+SELECT COUNT(S.Producao_id) AS Total_de_Blocos
 FROM RegEntradaBlocos AS B
     JOIN RegSaidaBlocos AS S ON B.Bloco_id = S.Bloco_id
-WHERE S.dt_Saida BETWEEN CAST(CONVERT(date,GETDATE()) AS varchar)+' 01:30:00' AND CAST(CONVERT(date,GETDATE()) AS varchar)+' 7:00:00'
+WHERE S.dt_Saida BETWEEN CAST(CONVERT(date,GETDATE()) AS varchar)+' 2:00:00' AND CAST(CONVERT(date,GETDATE()) AS varchar)+' 3:00:00'
