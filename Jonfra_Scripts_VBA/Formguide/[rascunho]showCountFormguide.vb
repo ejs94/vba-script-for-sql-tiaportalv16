@@ -44,7 +44,7 @@ SmartTags("DB_Contador_Producao_Dados_Turno_2_Contador_LIB OP{1}")
 
 
 ''''''''''''''''' Resolvendo o contador Conforme
-Dim tempCountConforme
+Dim tempCountConforme, tempCountNaoConforme
 
 Function CountConforme(ByRef opBB155, ByRef opBB165, ByRef opBB175, ByRef opBB185)
 	If (opBB155 = "Aprovada P1" OR opBB155 = "Aprovada P2" OR opBB165 = "Aprovada P1" OR opBB165 = "Aprovada P2" OR opBB165 = "Aprovada P1" OR opBB165 = "Aprovada P2" OR opBB175 = "Aprovada" OR opBB185 = "Aprovada") AND NOT (opBB155 = "Refugo P1" or opBB155 = "Refugo P2" or opBB165 = "Refugo P1" or opBB165 = "Refugo P2" or opBB175 = "Refugo" or opBB185 = "Refugo") Then
@@ -61,7 +61,7 @@ SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador_OK{1}") = tempConforme
 
 
 '''''''''''''''''' Resolvendo o contador de Não Conforme
- Dim tempCountNaoConforme
+ Dim 
 
  Function CountNaoConforme(ByRef opBB155, ByRef opBB165, ByRef opBB175, ByRef opBB185)
  	If opBB155 = "Refugo P1" or opBB155 = "Refugo P2"  or opBB165 = "Refugo P1" or opBB165 = "Refugo P2" or opBB175 = "Refugo"  or opBB185 = "Refugo"  or (opBB155 = "Trabalha" AND opBB165 = "Trabalha" AND opBB175 = "Trabalha" AND opBB185 = "Trabalha") Then
@@ -78,10 +78,9 @@ SmartTags("DB_Contador_Producao_Dados_Turno_2_Contador_LIB OP{1}") = tempCountNa
 
 ''''''''''''''''SOMA O TOTAL DE PEÇAS''''''''''''''''''''''''
 ''' Soma Total do Turno 1
-i = 0
-tempConforme = 0
-tempNaoConforme = 0
-tempTotalTurno = 0
+tempTotalConforme = 0
+tempTotalNaoConforme = 0
+tempTotalTotalTurno = 0
 For i = 1 To 10
     tempConforme = tempConforme + SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador_OK{"& i &"}")
     tempNaoConforme = tempNaoConforme + SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador_LIB OP{"& i &"}")
@@ -90,7 +89,6 @@ SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador Total OK") = tempConforme
 SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador Total LIB OP") = tempNaoConforme
 SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador_Total_Turno") = SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador Total OK") + SmartTags("DB_Contador_Producao_Dados_Turno_1_Contador Total LIB OP")
 ''' Soma Total do Turno 2
-i = 0
 tempConforme = 0
 tempNaoConforme = 0
 tempTotalTurno = 0
@@ -102,7 +100,6 @@ SmartTags("DB_Contador_Producao_Dados_Turno_2_Contador Total OK") = tempConforme
 SmartTags("DB_Contador_Producao_Dados_Turno_2_Contador Total LIB OP") = tempNaoConforme
 SmartTags("DB_Contador_Producao_Dados_Turno_2_Contador_Total_Turno") = SmartTags("DB_Contador_Producao_Dados_Turno_2_Contador Total OK") + SmartTags("DB_Contador_Producao_Dados_Turno_2_Contador Total LIB OP")
 ''' Soma Total do Turno 3
-i = 0
 tempConforme = 0
 tempNaoConforme = 0
 tempTotalTurno = 0
