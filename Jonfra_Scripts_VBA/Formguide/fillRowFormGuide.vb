@@ -19,7 +19,6 @@ If Not (rst.EOF And rst.BOF) Then
         If rst.EOF Then
             SmartTags("DB_Contador_Producao_Dados_Turno_"& IHM_Turno &"_SN_" & IHM_Linha & "{" & i & "}") = ""
 	        Else
-                showLog strFuncName & "Value[1]" & rst.Fields(1).Value & "Value[2]" & rst.Fields(2).Value & "Value[3]" & rst.Fields(3).Value & "Value[4]" & rst.Fields(4).Value 
                 SmartTags("DB_Contador_Producao_Dados_Turno_" & IHM_Turno & "_SN_" & IHM_Linha & "{" & i & "}") = rst.Fields(1).Value                
 
 	            If (rst.Fields(2).Value = "Aprovada P1" Or rst.Fields(2).Value = "Aprovada P2" Or rst.Fields(3).Value = "Aprovada P1" Or rst.Fields(3).Value = "Aprovada P2" Or rst.Fields(3).Value = "Aprovada P1" Or rst.Fields(3).Value = "Aprovada P2" Or rst.Fields(4).Value = "Aprovada" Or rst.Fields(5).Value = "Aprovada") And Not (rst.Fields(2).Value = "Refugo P1" Or rst.Fields(2).Value = "Refugo P2" Or rst.Fields(3).Value = "Refugo P1" Or rst.Fields(3).Value = "Refugo P2" Or rst.Fields(4).Value = "Refugo" Or rst.Fields(5).Value = "Refugo") Then
