@@ -6,6 +6,7 @@ Dim OP10 , OP20, OP30, OP40, Inpec
 
 pDATABASE = "hmiDB"
 strFuncName = "selectEditPart"
+SmartTags("Ultimo_WWID") = "Edit Production"
 
 On Error Resume Next
 
@@ -38,47 +39,74 @@ Select Case SmartTags("Edit_BB165_Field")
     Case 1
         OP10 = "Trabalha"
     Case 2
-        OP10 = "Aprovada"
+        OP10 = "Aprovada P1"
     Case 3
-        OP10 = "Refugo"
+        OP10 = "Refugo P1"
     Case 4
-        OP10 = "Medicao"
+        OP10 = "Medicao P1"
+    Case 5
+        OP10 = "Aprovada P2"
+    Case 6
+        OP10 = "Refugo P2"
+    Case 7
+        OP10 = "Medicao P2"
 End Select
+
 Select Case SmartTags("Edit_BB165_Field")
     Case 0
         OP20 = "Lib. Operacao"
     Case 1
         OP20 = "Trabalha"
     Case 2
-        OP20 = "Aprovada"
+        OP20 = "Aprovada P1"
     Case 3
-        OP20 = "Refugo"
+        OP20 = "Refugo P1"
     Case 4
-        OP20 = "Medicao"
+        OP20 = "Medicao P1"
+    Case 5
+        OP20 = "Aprovada P2"
+    Case 6
+        OP20 = "Refugo P2"
+    Case 7
+        OP20 = "Medicao P2"
 End Select
+
 Select Case SmartTags("Edit_BB175_Field")
     Case 0
         OP30 = "Lib. Operacao"
     Case 1
         OP30 = "Trabalha"
     Case 2
-        OP30 = "Aprovada"
+        OP30 = "Aprovada P1"
     Case 3
-        OP30 = "Refugo"
+        OP30 = "Refugo P1"
     Case 4
-        OP30 = "Medicao"
+        OP30 = "Medicao P1"
+    Case 5
+        OP30 = "Aprovada P2"
+    Case 6
+        OP30 = "Refugo P2"
+    Case 7
+        OP30 = "Medicao P2"
 End Select
+
 Select Case SmartTags("Edit_BB185_Field")
     Case 0
         OP40 = "Lib. Operacao"
     Case 1
         OP40 = "Trabalha"
     Case 2
-        OP40 = "Aprovada"
+        OP40 = "Aprovada P1"
     Case 3
-        OP40 = "Refugo"
+        OP40 = "Refugo P1"
     Case 4
-        OP40 = "Medicao"
+        OP40 = "Medicao P1"
+    Case 5
+        OP40 = "Aprovada P2"
+    Case 6
+        OP40 = "Refugo P2"
+    Case 7
+        OP40 = "Medicao P2"
 End Select
 
 Select Case SmartTags("Edit_Inspecao_Field")

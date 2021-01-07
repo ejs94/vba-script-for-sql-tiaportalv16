@@ -62,21 +62,15 @@ End Select
 
 Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.G704")
     Case 0
-        MCH350 = "Lib. Operacao"
+        G704 = "Lib. Operacao"
     Case 1
-        MCH350 = "Trabalha"
+        G704 = "Trabalha"
     Case 2
-        MCH350 = "Aprovada P1"
+        G704 = "Aprovada"
     Case 3
-        MCH350 = "Refugo P1"
+        G704 = "Refugo"
     Case 4
-        MCH350 = "Medicao P1"
-    Case 5
-		MCH350 = "Aprovada P2"
-	Case 6
-        MCH350 = "Refugo P2"
-    Case 7
-        MCH350 = "Medicao P2"
+        G704 = "Medicao"
 End Select
 
 Select Case SmartTags("DB102_RastreabilidadeBloco.E06_EsteiraSaida.PartStatusOP.G516")
@@ -130,7 +124,7 @@ If SerialString <> "" And ModeloString <> "" Then
         " FROM RegEntradaBlocos " &_
         " WHERE PNSerialString='" & SerialString & "' " &_
         " ORDER BY Bloco_id DESC), " &_
-        " '" & MCH250 & "', '" & MCH350 & "', '" & G704 & "',' " & G516 & "', '" & Medir & "', GETDATE());"
+        " '" & MCH250 & "', '" & MCH350 & "', '" & G704 & "','" & G516 & "', '" & Medir & "', GETDATE());"
 
 'Se o Debug estiver ativado
 'showLog  strFuncName & " Select: " & SQL_Table
@@ -156,8 +150,5 @@ rst.close
 conn.close
 Set rst = Nothing
 Set conn = Nothing
-
-
-
 
 End Sub
