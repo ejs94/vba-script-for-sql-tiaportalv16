@@ -15,22 +15,21 @@ Sub insertModel()
 'Rotina irá escrever no Banco de Dados após confirmação das opções dispobnibilizadas.
 Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim ModeloString , NomeModelo, DiametroCamisa
+Dim ModeloString , NomeModelo, DiametroCamisa, TamanhoBloco
 
 strFuncName = "insertModel"
 
 
 On Error Resume Next
 'WWID para teste, porém ao acessar esse número um WWID será inserido.
-If IsNull(SmartTags("Ultimo_WWID")) Then
-    SmartTags("Ultimo_WWID") = "TesteVB"
-End If
+SmartTags("Ultimo_WWID") = "insertModel"
 
 'Recebendo valores das Tags que são existentes na IHM
 Model_ID = SmartTags("edit_TipoCarga")
 ModeloString = SmartTags("edit_ModelString")
 NomeModelo = SmartTags("edit_ModelNameString")
 DiametroCamisa = SmartTags("edit_diametroCamisa")
+TamanhoBloco = SmartTags("edit_tamanhoBloco")
 
 'ABRIR CONEXAO
 Set conn = CreateObject("ADODB.Connection")
@@ -55,11 +54,12 @@ End If
 If Model_ID <> 0 And ModeloString <> "" And NomeModelo <> "" Then
     SQL_Table = "USE hmiDB; " &_
                 " INSERT INTO ModelosBlocos" &_
-                " (Modelo_id, ModeloString, NomeModelo, DiametroCamisa)" &_
+                " (Modelo_id, ModeloString, NomeModelo, DiametroCamisa, TamanhoBloco)" &_
                 " Values (" & Model_ID & ", " &_
                 "'" & ModeloString & "', " &_
                 "'" & NomeModelo & "', " &_
-                "'" & DiametroCamisa & "' );"
+                "'" & DiametroCamisa & "', " &_
+                "'" & TamanhoBloco & "' );"
                 
     
     Reg_Edit_Table =    "USE hmiDB; " &_

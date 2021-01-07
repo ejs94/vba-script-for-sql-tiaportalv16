@@ -10,9 +10,7 @@ strFuncName = "deletModel"
 
 On Error Resume Next
 'WWID para teste, porém ao acessar esse número um WWID será inserido.
-If IsNull(SmartTags("Ultimo_WWID")) Then
-    SmartTags("Ultimo_WWID") = "TesteVB"
-End If
+SmartTags("Ultimo_WWID") = "deletModel"
 
 'Acesso à IMHs Tags
 Model_ID = SmartTags("select_ID_Model")

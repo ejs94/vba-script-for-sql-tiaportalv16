@@ -11,26 +11,21 @@ Sub editModel()
 ' Version: v0.7
 ' Author:  EJS 
 '////////////////////////////////////////////////////////////////
-
-
 Dim strFuncName,Model_ID, SQL_Table, conn, rst
 Dim pDATABASE, Reg_Edit_Table
-Dim Modelo , NomeModelo, DiametroCamisa, TamanhoCilindro
+Dim Modelo , NomeModelo, DiametroCamisa, TamanhoBloco
 
 strFuncName = "editModel"
 
 On Error Resume Next
 'WWID para teste, porém ao acessar esse número um WWID será inserido.
-If IsNull(SmartTags("Ultimo_WWID")) Then
-    SmartTags("Ultimo_WWID") = "TesteVB"
-End If
+SmartTags("Ultimo_WWID") = "editModel"
 
 Model_ID = SmartTags("select_ID_Model")
 Modelo = SmartTags("edit_ModelString")
 NomeModelo = SmartTags("edit_ModelNameString")
-DiametroCamisa = SmartTags("edit_diametroCamisa") 'Verificar se estão definifos como inteiro.
-TamanhoCilindro = SmartTags("edit_TamanhoCilindro") 'Criar uma tag com esse nome na HMI Tags.
-
+DiametroCamisa = SmartTags("edit_diametroCamisa")
+TamanhoBloco = SmartTags("edit_tamanhoBloco")
 
 'ABRIR CONEXAO
 Set conn = CreateObject("ADODB.Connection")
@@ -58,7 +53,7 @@ If Model_ID <> 0 Then
                 " SET ModeloString='" & Modelo & "'," &_
                 " NomeModelo='" & NomeModelo & "'," &_
                 " DiametroCamisa=" & DiametroCamisa & "," &_
-                " TamanhoBloco= " & TamanhoCilindro &_
+                " TamanhoBloco=" & TamanhoBloco &_
                 " WHERE Modelo_id=" & Model_ID & "; "
     
     Reg_Edit_Table =    "USE hmiDB; " &_
@@ -92,6 +87,5 @@ rst.close
 conn.close
 Set rst = Nothing
 Set conn = Nothing
-
 
 End Sub
