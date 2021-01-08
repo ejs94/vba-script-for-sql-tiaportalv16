@@ -104,9 +104,9 @@ If Not (rst.EOF And rst.BOF) Then
 			SmartTags("Inspecao_Value_" & i) = rst.Fields(8).Value
 			'Como não achei uma melhor forma de converter em VBA DataTime para String, esse "quick-fix" é necessário			
 			If Minute(rst.Fields(9).Value) < 10 Then
-				SmartTags("DT_Inicio_Value_" & i) = Day(rst.Fields(9).Value) & "/" & Month(rst.Fields(9).Value) &"/" & Year(rst.Fields(9).Value) & " - " & Hour(rst.Fields(9).Value) & ":" & "0" & Minute(rst.Fields(9).Value)
+				SmartTags("DT_Inicio_Value_" & i) = Day(rst.Fields(9).Value) & "/" & Month(rst.Fields(9).Value)  & " - " & Hour(rst.Fields(9).Value) & ":" & "0" & Minute(rst.Fields(9).Value)
 			ElseIf Minute(rst.Fields(9).Value) >= 10 Then
-				SmartTags("DT_Inicio_Value_" & i) = Day(rst.Fields(9).Value) & "/" & Month(rst.Fields(9).Value) & "/" & Year(rst.Fields(9).Value) & " - " & Hour(rst.Fields(9).Value) & ":" & Minute(rst.Fields(9).Value)
+				SmartTags("DT_Inicio_Value_" & i) = Day(rst.Fields(9).Value) & "/" & Month(rst.Fields(9).Value) & " - " & Hour(rst.Fields(9).Value) & ":" & Minute(rst.Fields(9).Value)
 			End If
 			If Minute(rst.Fields(10).Value) < 10 Then
 				SmartTags("DT_Fim_Value_" & i) = Day(rst.Fields(10).Value) & "/" & Month(rst.Fields(10).Value) & "/" & Year(rst.Fields(10).Value) & " - " & Hour(rst.Fields(10).Value) & ":" & "0" & Minute(rst.Fields(10).Value)
