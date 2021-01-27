@@ -5,6 +5,8 @@ Dim strFuncName
 
 strFuncName = "fillRowFormGuide"
 
+On Error Resume Next
+
 tempCountConforme = 0
 tempCountNaoConforme = 0
 aux1 = 0
