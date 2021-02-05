@@ -34,16 +34,16 @@ If Not (rst.EOF And rst.BOF) Then
 	            	Else
 	            		tempCountNaoConforme = 0
 	            End If
-
+				'Tag Example: Status_Turno_3_SN_6_15
 				If tempCountConforme = 1 Then
 					'Cor normal no Field
-					SmartTags("Status_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 0 
+					SmartTags("Status_Turno_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 1 
 					ElseIf tempCountNaoConforme = 1 Then
 						'Cor de Não Conforme no Field
-						SmartTags("Status_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 1
+						SmartTags("Status_Turno_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 2
 					Else
 						'Cor normal no Field
-						SmartTags("Status_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 0
+						SmartTags("Status_Turno_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 0
 				End If
 
                 aux1 = aux1 + tempCountConforme
