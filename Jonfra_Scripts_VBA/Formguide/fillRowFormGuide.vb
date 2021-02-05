@@ -1,4 +1,4 @@
-Sub fillRowFormGuide(ByRef conn, ByRef rst, ByRef SQL_StartTime, ByRef SQL_EndTime, ByRef SQL_DayOffset, ByRef IHM_Turno, ByRef IHM_Linha)
+Sub fillRowFormGuide(ByRef conn, ByRef rst, ByRef SQL_StartTime, ByRef SQL_EndTime, ByRef SQL_StartOffset, ByRef SQL_EndOffSet, ByRef IHM_Turno, ByRef IHM_Linha)
 
 Dim SQL_Seriais, tempCountConforme, tempCountNaoConforme, i, aux1, aux2
 Dim strFuncName
@@ -12,7 +12,7 @@ tempCountNaoConforme = 0
 aux1 = 0
 aux2 = 0
 
-SQL_Seriais = returnSQLString(SQL_StartTime, SQL_EndTime, SQL_DayOffset )
+SQL_Seriais = returnSQLString(SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet )
 
 Set rst = conn.Execute(SQL_Seriais)
 If Not (rst.EOF And rst.BOF) Then
