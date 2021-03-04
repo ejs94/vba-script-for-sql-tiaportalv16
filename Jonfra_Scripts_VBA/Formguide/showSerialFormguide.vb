@@ -50,11 +50,24 @@ ElseIf (Time >= TimeValue("1:30:00") And Time < TimeValue("7:00:00")) Then
     Atual_Turno = 3
 End If
 
+
+'Atual_Turno = SmartTags("DB_Contador_Producao_Dados_Turno_1_Notas")
+
+
+
 showLog strFuncName & " Turno Atual: " & Atual_Turno & " Time: " & Time
 
 '''''''''''''''''' PRENCHE O CAMPO DE STRINGS DA IPC
 Select Case Atual_Turno
     Case 1
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
+
         ''' TURNO PASSADO
         ''' TURNO 3 '''
         IHM_Turno = 3
@@ -166,6 +179,14 @@ Select Case Atual_Turno
         Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
     Case 21
+
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
 
         ''' TURNO PASSADO
         ''' TURNO 3 '''
@@ -334,6 +355,14 @@ Select Case Atual_Turno
 
     Case 22
 
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
+
         ''' TURNO PASSADO
         ''' TURNO 1 '''
         IHM_Turno = 1
@@ -477,6 +506,15 @@ Select Case Atual_Turno
 
 
     Case 3
+
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
+
         ''' TURNO PASSADO
         ''' TURNO 1 '''
         IHM_Turno = 1
@@ -688,7 +726,7 @@ Select Case Atual_Turno
             Next
         Next
 End Select
-
+'TODO: Fazer uma limpeza da turno pelo time value
 
 ''''''''''''''''SOMA O TOTAL DE PEÇAS''''''''''''''''''''''''
 ''' Soma Total do Turno 1
