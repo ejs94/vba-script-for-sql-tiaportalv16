@@ -1,4 +1,4 @@
-Sub fillRowFormGuide(ByRef conn, ByRef rst, ByRef SQL_StartTime, ByRef SQL_EndTime, ByRef SQL_DayOffset, ByRef IHM_Turno, ByRef IHM_Linha)
+Sub fillRowFormGuide(ByRef conn, ByRef rst, ByRef SQL_StartTime, ByRef SQL_EndTime, ByRef SQL_StartOffset, ByRef SQL_EndOffSet, ByRef IHM_Turno, ByRef IHM_Linha)
 
 Dim SQL_Seriais, tempCountConforme, tempCountNaoConforme, i, aux1, aux2
 Dim strFuncName
@@ -12,7 +12,7 @@ tempCountNaoConforme = 0
 aux1 = 0
 aux2 = 0
 
-SQL_Seriais = returnSQLString(SQL_StartTime, SQL_EndTime, SQL_DayOffset )
+SQL_Seriais = returnSQLString(SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet )
 
 Set rst = conn.Execute(SQL_Seriais)
 If Not (rst.EOF And rst.BOF) Then
@@ -34,16 +34,16 @@ If Not (rst.EOF And rst.BOF) Then
 	            	Else
 	            		tempCountNaoConforme = 0
 	            End If
-
+				'Tag Example: Status_Turno_3_SN_6_15
 				If tempCountConforme = 1 Then
 					'Cor normal no Field
-					SmartTags("Status_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 0 
+					SmartTags("Status_Turno_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 1 
 					ElseIf tempCountNaoConforme = 1 Then
 						'Cor de Não Conforme no Field
-						SmartTags("Status_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 1
+						SmartTags("Status_Turno_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 2
 					Else
 						'Cor normal no Field
-						SmartTags("Status_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 0
+						SmartTags("Status_Turno_" & IHM_Turno & "_SN_" & IHM_Linha & "_" & i) = 0
 				End If
 
                 aux1 = aux1 + tempCountConforme

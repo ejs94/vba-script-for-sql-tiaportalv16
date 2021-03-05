@@ -4,8 +4,8 @@ Sub showSerialFormguide()
 'Será necessário realizar algumas queries no SQL Server
 
 Dim strFuncName, conn, rst, pDATABASE
-Dim SQL_Seriais, SQL_StartTime, SQL_EndTime, SQL_DayOffset
-Dim IHM_Linha, IHM_Turno
+Dim SQL_Seriais, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet
+Dim IHM_Linha, IHM_Turno, Atual_Turno
 Dim tempTotalConforme, tempTotalNaoConforme, i, j
 
 strFuncName = "showSerialFormguide"
@@ -34,307 +34,699 @@ If Err.Number <> 0 Then
 End If
 
 '''''''''''''''''''''''''''''''''''''' Definindo turno ''''''''''''''''''''''''''''
+'Testar:
+'Alterar esse IHM_Turno para Atual_Turno
+'Remover o Selec do IHM_Turno
+'Incluir um StartDayOffset e outro EndDayOffset
+'Passar os parametros do StartDayOffset e EndDayOffset pelo Atual_Turno
 
 If (Time >= TimeValue("7:00:00") And Time < TimeValue("16:30:00")) Then
-    IHM_Turno = 1
+    Atual_Turno = 1
 ElseIf (Time >= TimeValue("16:30:00") And Time < TimeValue("23:59:00")) Then
-    IHM_Turno = 2
+    Atual_Turno = 21
 ElseIf (Time >= TimeValue("00:00:00") And Time < TimeValue("01:30:00")) Then
-    IHM_Turno = 2
+    Atual_Turno = 22
 ElseIf (Time >= TimeValue("1:30:00") And Time < TimeValue("7:00:00")) Then
-    IHM_Turno = 3
+    Atual_Turno = 3
 End If
 
 
+'Atual_Turno = SmartTags("DB_Contador_Producao_Dados_Turno_1_Notas")
 
-showLog strFuncName & " Turno Atual: " & IHM_Turno & " Time: " & Time
+
+
+showLog strFuncName & " Turno Atual: " & Atual_Turno & " Time: " & Time
 
 '''''''''''''''''' PRENCHE O CAMPO DE STRINGS DA IPC
-Select Case IHM_Turno
+Select Case Atual_Turno
     Case 1
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
+
+        ''' TURNO PASSADO
+        ''' TURNO 3 '''
+        IHM_Turno = 3
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
+
+
+        'Para o Turno 3: 1h30 até 2h
+        IHM_Linha = 1
+        SQL_StartTime = "1:30:00"
+        SQL_EndTime = "2:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 2h até 3h
+        IHM_Linha = 2
+        SQL_StartTime = "2:00:00"
+        SQL_EndTime = "3:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 3h até 4h
+        IHM_Linha = 3
+        SQL_StartTime = "3:00:00"
+        SQL_EndTime = "4:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 4h até 5h
+        IHM_Linha = 4
+        SQL_StartTime = "4:00:00"
+        SQL_EndTime = "5:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 5h até 6h
+        IHM_Linha = 5
+        SQL_StartTime = "5:00:00"
+        SQL_EndTime = "6:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 6h até 7h
+        IHM_Linha = 6
+        SQL_StartTime = "6:00:00"
+        SQL_EndTime = "7:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+
         ''' TURNO 1 '''
         IHM_Turno = 1
-
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
+        
+        
         'Para o Turno 1: 7h até 8h
         IHM_Linha = 1
-        SQL_DayOffset = 0
         SQL_StartTime = "7:00:00"
         SQL_EndTime = "8:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 8h até 9h
         IHM_Linha = 2
-        SQL_DayOffset = 0
         SQL_StartTime = "8:00:00"
         SQL_EndTime = "9:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 9h até 10h
         IHM_Linha = 3
-        SQL_DayOffset = 0
         SQL_StartTime = "9:00:00"
         SQL_EndTime = "10:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 10h até 11h
         IHM_Linha = 4
-        SQL_DayOffset = 0
         SQL_StartTime = "10:00:00"
         SQL_EndTime = "11:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 11h até 12h
         IHM_Linha = 5
-        SQL_DayOffset = 0
         SQL_StartTime = "11:00:00"
         SQL_EndTime = "12:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 12h até 13h
         IHM_Linha = 6
-        SQL_DayOffset = 0
         SQL_StartTime = "12:00:00"
         SQL_EndTime = "13:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 13h até 14h
         IHM_Linha = 7
-        SQL_DayOffset = 0
         SQL_StartTime = "13:00:00"
         SQL_EndTime = "14:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 14h até 15h
         IHM_Linha = 8
-        SQL_DayOffset = 0
         SQL_StartTime = "14:00:00"
         SQL_EndTime = "15:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 15h até 16h
         IHM_Linha = 9
-        SQL_DayOffset = 0
         SQL_StartTime = "15:00:00"
         SQL_EndTime = "16:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 1: 16h até 16h30
         IHM_Linha = 10
-        SQL_DayOffset = 0
         SQL_StartTime = "16:00:00"
         SQL_EndTime = "16:30:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
+    Case 21
 
-    Case 2
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
 
-        ''' TURNO 2 '''
+        ''' TURNO PASSADO
+        ''' TURNO 3 '''
+        IHM_Turno = 3
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
+
+
+        'Para o Turno 3: 1h30 até 2h
+        IHM_Linha = 1
+        SQL_StartTime = "1:30:00"
+        SQL_EndTime = "2:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 2h até 3h
+        IHM_Linha = 2
+        SQL_StartTime = "2:00:00"
+        SQL_EndTime = "3:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 3h até 4h
+        IHM_Linha = 3
+        SQL_StartTime = "3:00:00"
+        SQL_EndTime = "4:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 4h até 5h
+        IHM_Linha = 4
+        SQL_StartTime = "4:00:00"
+        SQL_EndTime = "5:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 5h até 6h
+        IHM_Linha = 5
+        SQL_StartTime = "5:00:00"
+        SQL_EndTime = "6:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 3: 6h até 7h
+        IHM_Linha = 6
+        SQL_StartTime = "6:00:00"
+        SQL_EndTime = "7:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        ''' TURNO PASSADO
+        ''' TURNO 1 '''
+        IHM_Turno = 1
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
+        
+        
+        'Para o Turno 1: 7h até 8h
+        IHM_Linha = 1
+        SQL_StartTime = "7:00:00"
+        SQL_EndTime = "8:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 8h até 9h
+        IHM_Linha = 2
+        SQL_StartTime = "8:00:00"
+        SQL_EndTime = "9:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 9h até 10h
+        IHM_Linha = 3
+        SQL_StartTime = "9:00:00"
+        SQL_EndTime = "10:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 10h até 11h
+        IHM_Linha = 4
+        SQL_StartTime = "10:00:00"
+        SQL_EndTime = "11:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 11h até 12h
+        IHM_Linha = 5
+        SQL_StartTime = "11:00:00"
+        SQL_EndTime = "12:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 12h até 13h
+        IHM_Linha = 6
+        SQL_StartTime = "12:00:00"
+        SQL_EndTime = "13:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 13h até 14h
+        IHM_Linha = 7
+        SQL_StartTime = "13:00:00"
+        SQL_EndTime = "14:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 14h até 15h
+        IHM_Linha = 8
+        SQL_StartTime = "14:00:00"
+        SQL_EndTime = "15:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 15h até 16h
+        IHM_Linha = 9
+        SQL_StartTime = "15:00:00"
+        SQL_EndTime = "16:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 16h até 16h30
+        IHM_Linha = 10
+        SQL_StartTime = "16:00:00"
+        SQL_EndTime = "16:30:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        ''' TURNO PRESENTE
+        ''' TURNO 2 A'''
         IHM_Turno = 2
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
 
         'Para o Turno 2: 16h30 até 17h
         IHM_Linha = 1
-        SQL_DayOffset = 0
         SQL_StartTime = "16:30:00"
         SQL_EndTime = "17:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 17h até 18h
         IHM_Linha = 2
-        SQL_DayOffset = 0
         SQL_StartTime = "17:00:00"
         SQL_EndTime = "18:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 18h até 19h
         IHM_Linha = 3
-        SQL_DayOffset = 0
         SQL_StartTime = "18:00:00"
         SQL_EndTime = "19:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 19h até 20h
         IHM_Linha = 4
-        SQL_DayOffset = 0
         SQL_StartTime = "19:00:00"
         SQL_EndTime = "20:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 20h até 21h
         IHM_Linha = 5
-        SQL_DayOffset = 0
         SQL_StartTime = "20:00:00"
         SQL_EndTime = "21:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 21h até 22h
         IHM_Linha = 6
-        SQL_DayOffset = 0
         SQL_StartTime = "21:00:00"
         SQL_EndTime = "22:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 22h até 23h
         IHM_Linha = 7
-        SQL_DayOffset = 0
         SQL_StartTime = "22:00:00"
         SQL_EndTime = "23:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 23h até 23h59
         IHM_Linha = 8
-        SQL_DayOffset = 0
         SQL_StartTime = "23:00:00"
-        SQL_EndTime = "23:59:00"
+        SQL_EndTime = "23:59:59"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
 
+    Case 22
+
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
+
+        ''' TURNO PASSADO
+        ''' TURNO 1 '''
+        IHM_Turno = 1
+        SQL_StartOffset = -1
+        SQL_EndOffSet = -1
+        
+        
+        'Para o Turno 1: 7h até 8h
+        IHM_Linha = 1
+        SQL_StartTime = "7:00:00"
+        SQL_EndTime = "8:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 8h até 9h
+        IHM_Linha = 2
+        SQL_StartTime = "8:00:00"
+        SQL_EndTime = "9:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 9h até 10h
+        IHM_Linha = 3
+        SQL_StartTime = "9:00:00"
+        SQL_EndTime = "10:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 10h até 11h
+        IHM_Linha = 4
+        SQL_StartTime = "10:00:00"
+        SQL_EndTime = "11:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 11h até 12h
+        IHM_Linha = 5
+        SQL_StartTime = "11:00:00"
+        SQL_EndTime = "12:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 12h até 13h
+        IHM_Linha = 6
+        SQL_StartTime = "12:00:00"
+        SQL_EndTime = "13:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 13h até 14h
+        IHM_Linha = 7
+        SQL_StartTime = "13:00:00"
+        SQL_EndTime = "14:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 14h até 15h
+        IHM_Linha = 8
+        SQL_StartTime = "14:00:00"
+        SQL_EndTime = "15:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 15h até 16h
+        IHM_Linha = 9
+        SQL_StartTime = "15:00:00"
+        SQL_EndTime = "16:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 16h até 16h30
+        IHM_Linha = 10
+        SQL_StartTime = "16:00:00"
+        SQL_EndTime = "16:30:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        ''' TURNO PASSADO
+        ''' TURNO 2 A'''
+        IHM_Turno = 2
+        SQL_StartOffset = -1
+        SQL_EndOffSet = -1
+
+        'Para o Turno 2: 16h30 até 17h
+        IHM_Linha = 1
+        SQL_StartTime = "16:30:00"
+        SQL_EndTime = "17:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 17h até 18h
+        IHM_Linha = 2
+        SQL_StartTime = "17:00:00"
+        SQL_EndTime = "18:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 18h até 19h
+        IHM_Linha = 3
+        SQL_StartTime = "18:00:00"
+        SQL_EndTime = "19:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 19h até 20h
+        IHM_Linha = 4
+        SQL_StartTime = "19:00:00"
+        SQL_EndTime = "20:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 20h até 21h
+        IHM_Linha = 5
+        SQL_StartTime = "20:00:00"
+        SQL_EndTime = "21:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 21h até 22h
+        IHM_Linha = 6
+        SQL_StartTime = "21:00:00"
+        SQL_EndTime = "22:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 22h até 23h
+        IHM_Linha = 7
+        SQL_StartTime = "22:00:00"
+        SQL_EndTime = "23:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 23h até 23h59
+        IHM_Linha = 8
+        SQL_StartTime = "23:00:00"
+        SQL_EndTime = "23:59:59"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+
+        ''' TURNO PRESENTE
+        ''' TURNO 2 B'''
+        IHM_Turno = 2
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
 
 
         'Para o Turno 2: 23h59 até 01h
         IHM_Linha = 9
-        SQL_DayOffset = -1
-        SQL_StartTime = "23:59:00"
+        SQL_StartTime = "00:00:01"
         SQL_EndTime = "01:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 2: 01h até 1h30
         IHM_Linha = 10
-        SQL_DayOffset = 0
         SQL_StartTime = "01:00:00"
         SQL_EndTime = "01:30:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
 
     Case 3
+
+        ''' Limpa dados passados do turno 1
+        For j = 1 To 10
+            For i = 1 To 15
+                SmartTags("DB_Contador_Producao_Dados_Turno_" & 1 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 1 & "_SN_" & j & "_" & i) = 0
+            Next
+        Next
+
+        ''' TURNO PASSADO
+        ''' TURNO 1 '''
+        IHM_Turno = 1
+        SQL_StartOffset = -1
+        SQL_EndOffSet = -1
+        
+        
+        'Para o Turno 1: 7h até 8h
+        IHM_Linha = 1
+        SQL_StartTime = "7:00:00"
+        SQL_EndTime = "8:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 8h até 9h
+        IHM_Linha = 2
+        SQL_StartTime = "8:00:00"
+        SQL_EndTime = "9:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 9h até 10h
+        IHM_Linha = 3
+        SQL_StartTime = "9:00:00"
+        SQL_EndTime = "10:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 10h até 11h
+        IHM_Linha = 4
+        SQL_StartTime = "10:00:00"
+        SQL_EndTime = "11:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 11h até 12h
+        IHM_Linha = 5
+        SQL_StartTime = "11:00:00"
+        SQL_EndTime = "12:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 12h até 13h
+        IHM_Linha = 6
+        SQL_StartTime = "12:00:00"
+        SQL_EndTime = "13:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 13h até 14h
+        IHM_Linha = 7
+        SQL_StartTime = "13:00:00"
+        SQL_EndTime = "14:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 14h até 15h
+        IHM_Linha = 8
+        SQL_StartTime = "14:00:00"
+        SQL_EndTime = "15:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 15h até 16h
+        IHM_Linha = 9
+        SQL_StartTime = "15:00:00"
+        SQL_EndTime = "16:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 1: 16h até 16h30
+        IHM_Linha = 10
+        SQL_StartTime = "16:00:00"
+        SQL_EndTime = "16:30:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        ''' TURNO PASSADO
+        ''' TURNO 2 A'''
+        IHM_Turno = 2
+        SQL_StartOffset = -1
+        SQL_EndOffSet = -1
+
+        'Para o Turno 2: 16h30 até 17h
+        IHM_Linha = 1
+        SQL_StartTime = "16:30:00"
+        SQL_EndTime = "17:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 17h até 18h
+        IHM_Linha = 2
+        SQL_StartTime = "17:00:00"
+        SQL_EndTime = "18:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 18h até 19h
+        IHM_Linha = 3
+        SQL_StartTime = "18:00:00"
+        SQL_EndTime = "19:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 19h até 20h
+        IHM_Linha = 4
+        SQL_StartTime = "19:00:00"
+        SQL_EndTime = "20:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 20h até 21h
+        IHM_Linha = 5
+        SQL_StartTime = "20:00:00"
+        SQL_EndTime = "21:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 21h até 22h
+        IHM_Linha = 6
+        SQL_StartTime = "21:00:00"
+        SQL_EndTime = "22:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 22h até 23h
+        IHM_Linha = 7
+        SQL_StartTime = "22:00:00"
+        SQL_EndTime = "23:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 23h até 23h59
+        IHM_Linha = 8
+        SQL_StartTime = "23:00:00"
+        SQL_EndTime = "23:59:59"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+
+        ''' TURNO PASSADO
+        ''' TURNO 2 B'''
+        IHM_Turno = 2
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
+
+
+        'Para o Turno 2: 23h59 até 01h
+        IHM_Linha = 9
+        SQL_StartTime = "00:00:01"
+        SQL_EndTime = "01:00:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+        'Para o Turno 2: 01h até 1h30
+        IHM_Linha = 10
+        SQL_StartTime = "01:00:00"
+        SQL_EndTime = "01:30:00"
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
+
+
+        ''' TURNO PRESENTE
         ''' TURNO 3 '''
         IHM_Turno = 3
+        SQL_StartOffset = 0
+        SQL_EndOffSet = 0
+
 
         'Para o Turno 3: 1h30 até 2h
         IHM_Linha = 1
-        SQL_DayOffset = 0
         SQL_StartTime = "1:30:00"
         SQL_EndTime = "2:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 3: 2h até 3h
         IHM_Linha = 2
-        SQL_DayOffset = 0
         SQL_StartTime = "2:00:00"
         SQL_EndTime = "3:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 3: 3h até 4h
         IHM_Linha = 3
-        SQL_DayOffset = 0
         SQL_StartTime = "3:00:00"
         SQL_EndTime = "4:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 3: 4h até 5h
         IHM_Linha = 4
-        SQL_DayOffset = 0
         SQL_StartTime = "4:00:00"
         SQL_EndTime = "5:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 3: 5h até 6h
         IHM_Linha = 5
-        SQL_DayOffset = 0
         SQL_StartTime = "5:00:00"
         SQL_EndTime = "6:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
-
-
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
         'Para o Turno 3: 6h até 7h
         IHM_Linha = 6
-        SQL_DayOffset = 0
         SQL_StartTime = "6:00:00"
         SQL_EndTime = "7:00:00"
-
-        Call fillRowFormGuide( conn,  rst,  SQL_StartTime,  SQL_EndTime,  SQL_DayOffset,  IHM_Turno,  IHM_Linha)
+        Call fillRowFormGuide( conn, rst, SQL_StartTime, SQL_EndTime, SQL_StartOffset, SQL_EndOffSet, IHM_Turno, IHM_Linha)
 
 End Select
 ''''''''''''''''''''''''''''''''''' Apaga Telas se não Estiver no Horário Certo'''''''''''''''''''''''
 
-Select Case IHM_Turno
+Select Case Atual_Turno
     Case 1
         For j = 1 To 10
             For i = 1 To 15
                 SmartTags("DB_Contador_Producao_Dados_Turno_" & 2 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 2 & "_SN_" & j & "_" & i) = 0
             Next
         Next
+        'Para não apagar o até o segundo turno
+        'For j = 1 To 6
+        '    For i = 1 To 15
+        '        SmartTags("DB_Contador_Producao_Dados_Turno_" & 3 & "_SN_" & j & "{" & i & "}") = ""
+        '        SmartTags("Status_Turno_" & 3 & "_SN_" & j & "_" & i) = 0
+        '    Next
+        'Next
+    Case 22
         For j = 1 To 6
             For i = 1 To 15
                 SmartTags("DB_Contador_Producao_Dados_Turno_" & 3 & "_SN_" & j & "{" & i & "}") = ""
-            Next
-        Next
-    Case 2
-        For j = 1 To 6
-            For i = 1 To 15
-                SmartTags("DB_Contador_Producao_Dados_Turno_" & 3 & "_SN_" & j & "{" & i & "}") = ""
+                SmartTags("Status_Turno_" & 3 & "_SN_" & j & "_" & i) = 0
             Next
         Next
 End Select
-
+'TODO: Fazer uma limpeza da turno pelo time value
 
 ''''''''''''''''SOMA O TOTAL DE PEÇAS''''''''''''''''''''''''
 ''' Soma Total do Turno 1
